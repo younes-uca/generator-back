@@ -40,14 +40,14 @@ ${pojo.name} findBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.i
 void deleteBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.id.name});
 
 <#list pojo.fieldsGeneric as fieldGeneric>
-    <#if fieldGeneric.pojo.reference??>
-        List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
-        int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
-
+    <#if (fieldGeneric.pojo.reference)??>
+    List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
+    int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
     </#if>
+    <#if (fieldGeneric.pojo.id)??>
     List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name});
     int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name});
-
+    </#if>
 </#list>
 /**
 * save ${pojo.name} in database
