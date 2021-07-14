@@ -133,6 +133,7 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
 
         FileUtil.createDirectory(outputDirectory);
         if (EngineUtil.inFolder(templateName)) {
+            // frontend component folder like commandes
             outputDirectory += File.separator + EngineUtil.getFolder(templateName);
             FileUtil.createDirectory(outputDirectory);
             freeMarkerService.generateFileWithOnePojo(pojo, templateName, templatePath, StringFormatterUtil.lowerCaseTheFirstLetter(pojo.getName()) + "-" + suffix + "." + extensions, outputDirectory, config);

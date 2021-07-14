@@ -16,12 +16,14 @@ public interface ${pojo.name}Dao extends JpaRepository<${pojo.name},${pojo.id.ty
 </#if>
 
 <#list pojo.fieldsGeneric as fieldGeneric>
-    <#if fieldGeneric.pojo.reference??>
+    <#if (fieldGeneric.pojo.reference)??>
         List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
         int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name});
     </#if>
+    <#if (fieldGeneric.pojo.id)??>
     List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name});
     int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name});
+    </#if>
 </#list>
 
 }

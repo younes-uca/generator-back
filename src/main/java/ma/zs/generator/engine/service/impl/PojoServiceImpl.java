@@ -23,14 +23,15 @@ public class PojoServiceImpl implements PojoService {
 
     public List<Pojo> validatePojos(List<Pojo> pojos) {
         fillPojoLists(pojos);
-        for (Pojo pojo : pojos) {
-            setFieldsSimpleMinMaxAndSimple(pojo);
-            setNestedPojo(pojo, pojos);
-            preparePojoBoolean(pojo);
-            preparePojoComplex(pojo);
-
-        }
-        return pojos;
+//        for (Pojo pojo : pojos) {
+//            setFieldsSimpleMinMaxAndSimple(pojo);
+//            setNestedPojo(pojo, pojos);
+//            preparePojoBoolean(pojo);
+//            preparePojoComplex(pojo);
+//
+//        }
+//        return pojos;
+        return prepare(pojos);
     }
 
     public List<Pojo>
@@ -138,7 +139,7 @@ public class PojoServiceImpl implements PojoService {
                 field.setSimple(true);
                 field.setGeneric(false);
                 field.setList(false);
-//                pojo.getFieldsSimple().add(field);
+                pojo.getFieldsSimple().add(field);
             } else {
                 field.setSimple(false);
             }
@@ -150,8 +151,10 @@ public class PojoServiceImpl implements PojoService {
         for (Field field : fields) {
             if (!field.isSimple() && !field.isList()) {
                 field.setGeneric(true);
+                // added by MoiseGui
+                field.setPojo(pojo);
                 field.setList(false);
-//                pojo.getFieldsGeneric().add(field);
+                pojo.getFieldsGeneric().add(field);
             }
         }
     }
@@ -166,10 +169,10 @@ public class PojoServiceImpl implements PojoService {
                     field.setType(new Type(types[0]));
                     field.setList(true);
                     field.setGeneric(false);
-//                    if (StringUtil.isEmpty(field.getMappedBy())) {
-//                        field.setMappedBy(StringUtil.upperCaseFirstLetter(pojo.getName()));
-//                    }
-//                    pojo.getFieldsList().add(field);
+                    if (StringUtil.isEmpty(field.getMappedBy())) {
+                        field.setMappedBy(StringUtil.upperCaseFirstLetter(pojo.getName()));
+                    }
+                    pojo.getFieldsList().add(field);
                 }
             }
 

@@ -30,7 +30,7 @@ public class YamlTextPojoReaderImpl implements YamlTextPojoReader {
     public List<Pojo> convert(String yamlAsText) throws IOException {
         Map<String, Map<String, String>> yamlPojos = parseYaml(yamlAsText);
         List<Pojo> pojos = linkPojoToField(yamlPojos);
-        pojoService.prepare(pojos);
+//        pojoService.prepare(pojos);
         return pojos;
     }
 
