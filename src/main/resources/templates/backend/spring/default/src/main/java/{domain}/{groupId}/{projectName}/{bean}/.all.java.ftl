@@ -21,7 +21,7 @@ import javax.persistence.Id;
     import javax.persistence.GenerationType;
 </#if>
 <#list pojo.fieldsGeneric as fieldGeneric>
-    import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.${fieldGeneric.type.simpleName};
+    import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.${fieldGeneric.type.simpleName?cap_first};
 </#list>
 
 @Entity

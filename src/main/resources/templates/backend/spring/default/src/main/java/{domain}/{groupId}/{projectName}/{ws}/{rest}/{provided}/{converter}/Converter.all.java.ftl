@@ -63,7 +63,7 @@ ${pojo.name} item = new ${pojo.name}();
 </#list>
 <#list pojo.fieldsGeneric as fieldGeneric>
     if(vo.get${fieldGeneric.name?cap_first}Vo()!=null && this.${fieldGeneric.name})
-    <#if pojo.name != fieldGeneric.pojo.name>
+    <#if (fieldGeneric.pojo.name)?? && pojo.name != fieldGeneric.pojo.name>
         item.set${fieldGeneric.name?cap_first}(${fieldGeneric.type.simpleName?uncap_first}Converter.toItem(vo.get${fieldGeneric.name?cap_first}Vo())) ;
     <#else>
         item.set${fieldGeneric.name?cap_first}(toItem(vo.get${fieldGeneric.name?cap_first}Vo())) ;
@@ -114,7 +114,7 @@ ${pojo.name}Vo vo = new ${pojo.name}Vo();
 </#list>
 <#list pojo.fieldsGeneric as fieldGeneric>
     if(item.get${fieldGeneric.name?cap_first}()!=null && this.${fieldGeneric.name}) {
-    <#if pojo.name != fieldGeneric.pojo.name>
+    <#if (fieldGeneric.pojo.name)?? && pojo.name != fieldGeneric.pojo.name>
         <#list fieldGeneric.pojo.fields as fieldsGenericOfThisField>
             <#if fieldsGenericOfThisField.generic && fieldsGenericOfThisField.pojo.name == pojo.name>
                 ${fieldGeneric.type.simpleName?uncap_first}Converter.set${fieldsGenericOfThisField.name?cap_first}(false);
@@ -126,7 +126,7 @@ ${pojo.name}Vo vo = new ${pojo.name}Vo();
                 ${fieldGeneric.type.simpleName?uncap_first}Converter.set${fieldsGenericOfThisField.name?cap_first}(true);
             </#if>
         </#list>
-    <#else>
+    <#elseif (fieldGeneric.pojo.fields)??>
         <#list fieldGeneric.pojo.fields as fieldsGenericOfThisField>
             <#if fieldsGenericOfThisField.generic && fieldsGenericOfThisField.pojo.name == pojo.name>
                 this.set${fieldsGenericOfThisField.name?cap_first}(false);

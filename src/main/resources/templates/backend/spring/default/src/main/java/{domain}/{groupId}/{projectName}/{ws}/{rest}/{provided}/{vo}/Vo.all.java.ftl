@@ -5,6 +5,9 @@ package  ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.$
 </#if>
 <#if pojo.hasDate>
     import java.util.Date;
+    import javax.persistence.Temporal;
+    import javax.persistence.TemporalType;
+    import com.fasterxml.jackson.annotation.JsonFormat;
 </#if>
 <#if pojo.hasBigDecimal>
     import java.math.BigDecimal;
@@ -13,8 +16,7 @@ package  ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.$
 public class ${pojo.name}Vo {
 
 <#list pojo.fieldsSimple as fieldSimple>
-    private String ${fieldSimple.name} ;
-
+            private String ${fieldSimple.name} ;
 </#list>
 
 <#list pojo.fieldsGeneric as fieldGeneric>
@@ -22,9 +24,8 @@ public class ${pojo.name}Vo {
 </#list>
 
 <#list pojo.fieldsList as fieldGenericList>
-private List
-<${fieldGenericList.type.simpleName}Vo> ${fieldGenericList.name}Vo ;
-    </#list>
+private List<${fieldGenericList.type.simpleName}Vo> ${fieldGenericList.name}Vo ;
+</#list>
 
     <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
         <#if pojo.id.name != fieldSimpleNumberOrDate.name>
@@ -88,8 +89,7 @@ private List
         return this.${fieldGenericList.name}Vo;
         }
 
-        public void set${fieldGenericList.name?cap_first}Vo(List
-        <${fieldGenericList.type.simpleName}Vo> ${fieldGenericList.name}Vo){
+        public void set${fieldGenericList.name?cap_first}Vo(List<${fieldGenericList.type.simpleName}Vo> ${fieldGenericList.name}Vo){
             this.${fieldGenericList.name}Vo = ${fieldGenericList.name}Vo;
             }
             </#list>

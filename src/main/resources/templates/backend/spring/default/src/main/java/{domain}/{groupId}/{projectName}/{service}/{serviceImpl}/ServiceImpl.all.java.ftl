@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.${pojo.name};
 <#list pojo.fieldsGeneric as fieldGeneric>
+    <#if (fieldGeneric.pojo.name)??>
     import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.${fieldGeneric.pojo.name};
+    </#if>
 </#list>
 <#list pojo.fieldsList as fieldList>
     import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.${fieldList.pojo.name};
@@ -45,7 +47,7 @@ public List<${pojo.name}> findAll(){
 return ${pojo.name?uncap_first}Dao.findAll();
 }
 <#list pojo.fieldsGeneric as fieldGeneric>
-    <#if fieldGeneric.pojo.reference??>
+    <#if (fieldGeneric.pojo.reference)??>
         @Override
         public List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
         return ${pojo.name?uncap_first}Dao.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.name});
@@ -57,17 +59,21 @@ return ${pojo.name?uncap_first}Dao.findAll();
         }
 
     </#if>
+    <#if (fieldGeneric.pojo.id)??>
     @Override
     public List<${pojo.name}> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
     return ${pojo.name?uncap_first}Dao.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name});
 
     }
+    </#if>
+    <#if (fieldGeneric.pojo.id)??>
     @Override
     @Transactional
     public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
     return ${pojo.name?uncap_first}Dao.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name});
 
     }
+    </#if>
 
 </#list>
 <#if pojo.reference??>
@@ -108,22 +114,22 @@ public ${pojo.name} save (${pojo.name} ${pojo.name?uncap_first}){
 <#list pojo.fieldsGeneric as fieldGeneric>
 
     if(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()!=null){
-    <#if fieldGeneric.pojo.reference??>
+    <#if (fieldGeneric.pojo.reference)??>
         <#if fieldGeneric.pojo.name != pojo.name>
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = ${fieldGeneric.type.simpleName?uncap_first}Service.findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
         <#else>
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first}  = findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
         </#if>
     <#else>
-        <#if fieldGeneric.pojo.name != pojo.name>
+        <#if (fieldGeneric.pojo.name)?? && fieldGeneric.pojo.name != pojo.name>
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = ${fieldGeneric.type.simpleName?uncap_first}Service.findBy${fieldGeneric.pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.id.name?cap_first}());
-        <#else>
+        <#elseif (fieldGeneric.pojo.id)??>
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = findBy${fieldGeneric.pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.id.name?cap_first}());
         </#if>
 
     </#if>
     if(${fieldGeneric.name?uncap_first} == null)
-    <#if fieldGeneric.pojo.name != pojo.name>
+    <#if (fieldGeneric.pojo.name)?? &&  fieldGeneric.pojo.name != pojo.name>
         ${pojo.name?uncap_first}.set${fieldGeneric.name?cap_first}(${fieldGeneric.type.simpleName?uncap_first}Service.save(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()));
     <#else>
         ${pojo.name?uncap_first}.set${fieldGeneric.name?cap_first}(save(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()));
@@ -229,12 +235,12 @@ String query = "SELECT o FROM ${pojo.name} o where 1=1 ";
 </#list>
 <#list pojo.fieldsGeneric as fieldGeneric>
     if(${pojo.name?uncap_first}Vo.get${fieldGeneric.name?cap_first}Vo()!=null){
-    <#if fieldGeneric.pojo.id.type.simpleName != "String">
+    <#if (fieldGeneric.pojo.id)?? && fieldGeneric.pojo.id.type.simpleName != "String">
         query += SearchUtil.addConstraint( "o", "${fieldGeneric.name?uncap_first}.${fieldGeneric.pojo.id.name}","=",${pojo.name?uncap_first}Vo.get${fieldGeneric.name?cap_first}Vo().get${fieldGeneric.pojo.id.name?cap_first}());
-    <#else>
+    <#elseif (fieldGeneric.pojo.id)??>
         query += SearchUtil.addConstraint( "o", "${fieldGeneric.name?uncap_first}.${fieldGeneric.pojo.id.name}","LIKE",${pojo.name?uncap_first}Vo.get${fieldGeneric.name?cap_first}Vo().get${fieldGeneric.pojo.id.name?cap_first}());
     </#if>
-    <#if fieldGeneric.pojo.reference??>
+    <#if (fieldGeneric.pojo.reference)??>
         <#if fieldGeneric.pojo.reference.type.simpleName != "String">
             query += SearchUtil.addConstraint( "o", "${fieldGeneric.name?uncap_first}.${fieldGeneric.pojo.reference.name}","=",${pojo.name?uncap_first}Vo.get${fieldGeneric.name?cap_first}Vo().get${fieldGeneric.pojo.reference.name?cap_first}());
         <#else>

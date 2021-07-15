@@ -27,7 +27,7 @@ public class ${pojo.name}Rest {
 private ${pojo.name}Service ${pojo.name?uncap_first}Service;
 
 @Autowired
-private ${pojo.name}Converter ${pojo.name?uncap_first}Converter ;
+private ${pojo.name}Converter ${pojo.name?uncap_first}Converter;
 
 @ApiOperation("Saves the specified ${pojo.name?uncap_first}")
 @PostMapping("/")
@@ -47,24 +47,24 @@ return ${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first});
 @ApiOperation("Updates the specified ${pojo.name?uncap_first}")
 @PutMapping("/")
 public ${pojo.name}Vo update(@RequestBody ${pojo.name}Vo ${pojo.name?uncap_first}Vo){
-${pojo.name} ${pojo.name?uncap_first}= ${pojo.name?uncap_first}Converter.toItem(${pojo.name?uncap_first}Vo);
-${pojo.name?uncap_first}=    ${pojo.name?uncap_first}Service.update(${pojo.name?uncap_first});
+${pojo.name} ${pojo.name?uncap_first} = ${pojo.name?uncap_first}Converter.toItem(${pojo.name?uncap_first}Vo);
+${pojo.name?uncap_first} = ${pojo.name?uncap_first}Service.update(${pojo.name?uncap_first});
 return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first});
 }
 
 @ApiOperation("Finds a list of all ${pojo.name?uncap_first}s")
 @GetMapping("/")
-public List
-<${pojo.name}Vo> findAll(){
+public List<${pojo.name}Vo> findAll(){
     return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findAll());
-    }
+}
 
     @ApiOperation("Finds a ${pojo.name?uncap_first} by ${pojo.id.name}")
     @GetMapping("/${pojo.id.name}/{${pojo.id.name}}")
     public ${pojo.name}Vo findBy${pojo.id.name?cap_first}(@PathVariable ${pojo.id.type.simpleName} ${pojo.id.name}){
-    return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findBy${pojo.id.name?cap_first}
-    (${pojo.id.name}));
+    return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findBy${pojo.id.name?cap_first}(${pojo.id.name}));
     }
+
+
     @ApiOperation("Deletes a ${pojo.name?uncap_first} by ${pojo.id.name}")
     @DeleteMapping("/${pojo.id.name}/{${pojo.id.name}}")
     public void deleteBy${pojo.id.name?cap_first}(@PathVariable ${pojo.id.type.simpleName} ${pojo.id.name}){
@@ -87,55 +87,37 @@ public List
 
 
     <#list pojo.fieldsGeneric as fieldGeneric>
-    <#if fieldGeneric.pojo.reference??>
+    <#if (fieldGeneric.pojo.reference)??>
     @ApiOperation("Finds a ${pojo.name?uncap_first} by ${fieldGeneric.pojo.reference.name} of ${fieldGeneric.name}")
     @GetMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.reference.name}/{${fieldGeneric.pojo.reference.name}}")
-    public List
-    <${pojo.name}Vo> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}
-        (@PathVariable ${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
-        return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}
-        Service.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}
-        (${fieldGeneric.pojo.reference.name}));
-        }
+    public List<${pojo.name}Vo> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(@PathVariable ${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
+        return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.name}));
+    }
 
-        @ApiOperation("Deletes a ${pojo.name?uncap_first} by ${fieldGeneric.pojo.reference.name} of ${fieldGeneric.name}
-        ")
-        @DeleteMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.reference.name}/{${fieldGeneric.pojo.reference.name}
-        }")
-        public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}
-        (@PathVariable ${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
-        return ${pojo.name?uncap_first}
-        Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}
-        (${fieldGeneric.pojo.reference.name});
+        @ApiOperation("Deletes a ${pojo.name?uncap_first} by ${fieldGeneric.pojo.reference.name} of ${fieldGeneric.name}")
+        @DeleteMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.reference.name}/{${fieldGeneric.pojo.reference.name}}")
+        public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(@PathVariable ${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
+        return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.name});
         }
         </#if>
-
+    <#if (fieldGeneric.pojo.id)??>
         @ApiOperation("Finds ${pojo.name?uncap_first} by ${fieldGeneric.pojo.id.name} of ${fieldGeneric.name}")
         @GetMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.id.name}/{${fieldGeneric.pojo.id.name}}")
-        public List
-        <${pojo.name}Vo> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}
-            (@PathVariable ${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
-            return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}
-            Service.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}
-            (${fieldGeneric.pojo.id.name}));
+        public List<${pojo.name}Vo> findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(@PathVariable ${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
+            return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name}));
             }
             @ApiOperation("Deletes ${pojo.name?uncap_first} by ${fieldGeneric.pojo.id.name} of ${fieldGeneric.name}")
             @DeleteMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.id.name}/{${fieldGeneric.pojo.id.name}}")
-            public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}
-            (@PathVariable ${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
-            return ${pojo.name?uncap_first}
-            Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}
-            (${fieldGeneric.pojo.id.name});
+            public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(@PathVariable ${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
+            return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name});
             }
-
+        </#if>
             </#list>
 
-            @ApiOperation("Search ${pojo.name?uncap_first} by a specific criterion")
+            @ApiOperation("Search ${pojo.name?uncap_first} by a specific criteria")
             @PostMapping("/search")
-            public List
-            <${pojo.name}Vo> findByCriteria(@RequestBody ${pojo.name}Vo ${pojo.name?uncap_first}Vo){
-                return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}
-                Service.findByCriteria(${pojo.name?uncap_first}Vo));
+            public List<${pojo.name}Vo> findByCriteria(@RequestBody ${pojo.name}Vo ${pojo.name?uncap_first}Vo){
+                return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first}Service.findByCriteria(${pojo.name?uncap_first}Vo));
                 }
                 public ${pojo.name}Converter get${pojo.name}Converter(){
                 return ${pojo.name?uncap_first}Converter;
@@ -153,4 +135,4 @@ public List
                 }
 
 
-                }
+            }
