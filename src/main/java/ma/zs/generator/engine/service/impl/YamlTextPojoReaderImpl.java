@@ -24,40 +24,40 @@ import static java.util.stream.Collectors.toMap;
  */
 @Service
 public class YamlTextPojoReaderImpl implements YamlTextPojoReader {
-    @Autowired
-    PojoService pojoService;
+	@Autowired
+	PojoService pojoService;
 
-    public List<Pojo> convert(String yamlAsText) throws IOException {
-        Map<String, Map<String, String>> yamlPojos = parseYaml(yamlAsText);
-        List<Pojo> pojos = linkPojoToField(yamlPojos);
-        pojoService.prepare(pojos);
-        return pojos;
-    }
+	public List<Pojo> convert(String yamlAsText) throws IOException {
+		Map<String, Map<String, String>> yamlPojos = parseYaml(yamlAsText);
+		List<Pojo> pojos = linkPojoToField(yamlPojos);
+		pojoService.prepare(pojos);
+		return pojos;
+	}
 
-    private Map<String, Map<String, String>> parseYaml(String yamlAsText) {
-        Yaml yaml = new Yaml();
-        // key: pojoName , Map : fieldName, fieldType
-        Map<String, Map<String, String>> yamlPojos = (Map<String, Map<String, String>>) yaml.load(yamlAsText);
-        return yamlPojos;
-    }
+	private Map<String, Map<String, String>> parseYaml(String yamlAsText) {
+		Yaml yaml = new Yaml();
+		// key: pojoName , Map : fieldName, fieldType
+		Map<String, Map<String, String>> yamlPojos = (Map<String, Map<String, String>>) yaml.load(yamlAsText);
+		return yamlPojos;
+	}
 
-    private List<Pojo> linkPojoToField(Map<String, Map<String, String>> yamlPojos) {
-        if (yamlPojos == null)
-            yamlPojos = new HashMap<>();
-        final Map<String, List<Field>> pojoField = yamlPojos.entrySet().stream()
-                .collect(toMap(this::pojoName, this::fields));
-        return pojoField.entrySet().stream().map(e -> new Pojo(e.getKey(), e.getValue())).collect(toList());
-    }
+	private List<Pojo> linkPojoToField(Map<String, Map<String, String>> yamlPojos) {
+		if (yamlPojos == null)
+			yamlPojos = new HashMap<>();
+		final Map<String, List<Field>> pojoField = yamlPojos.entrySet().stream()
+				.collect(toMap(this::pojoName, this::fields));
+		return pojoField.entrySet().stream().map(e -> new Pojo(e.getKey(), e.getValue())).collect(toList());
+	}
 
-    private String pojoName(Entry<String, Map<String, String>> yamlOuterMapEntry) {
-        return yamlOuterMapEntry.getKey();
-    }
+	private String pojoName(Entry<String, Map<String, String>> yamlOuterMapEntry) {
+		return yamlOuterMapEntry.getKey();
+	}
 
-    private List<Field> fields(Entry<String, Map<String, String>> yamlOuterMapEntry) {
-        Map<String, String> yamlFields = yamlOuterMapEntry.getValue();
-        if (yamlFields == null)
-            return new ArrayList<>();
-        return yamlFields.entrySet().stream().map(e -> new Field(e.getKey(), e.getValue()))
-                .collect(Collectors.toList());
-    }
+	private List<Field> fields(Entry<String, Map<String, String>> yamlOuterMapEntry) {
+		Map<String, String> yamlFields = yamlOuterMapEntry.getValue();
+		if (yamlFields == null)
+			return new ArrayList<>();
+		return yamlFields.entrySet().stream().map(e -> new Field(e.getKey(), e.getValue()))
+				.collect(Collectors.toList());
+	}
 }
