@@ -41,7 +41,7 @@ return ${pojo.name?uncap_first}Converter.toVo(${pojo.name?uncap_first});
 @DeleteMapping("/")
 public int delete(@RequestBody ${pojo.name}Vo ${pojo.name?uncap_first}Vo){
 ${pojo.name} ${pojo.name?uncap_first} = ${pojo.name?uncap_first}Converter.toItem(${pojo.name?uncap_first}Vo);
-return ${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first});
+    return ${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first});
 }
 
 @ApiOperation("Updates the specified ${pojo.name?uncap_first}")
@@ -67,8 +67,8 @@ public List<${pojo.name}Vo> findAll(){
 
     @ApiOperation("Deletes a ${pojo.name?uncap_first} by ${pojo.id.name}")
     @DeleteMapping("/${pojo.id.name}/{${pojo.id.name}}")
-    public void deleteBy${pojo.id.name?cap_first}(@PathVariable ${pojo.id.type.simpleName} ${pojo.id.name}){
-    ${pojo.name?uncap_first}Service.deleteBy${pojo.id.name?cap_first}(${pojo.id.name});
+    public int deleteBy${pojo.id.name?cap_first}(@PathVariable ${pojo.id.type.simpleName} ${pojo.id.name}){
+        return ${pojo.name?uncap_first}Service.deleteBy${pojo.id.name?cap_first}(${pojo.id.name});
     }
 
     <#if pojo.reference??>
@@ -80,7 +80,7 @@ public List<${pojo.name}Vo> findAll(){
         @ApiOperation("Deletes a  ${pojo.name?uncap_first} by ${pojo.reference.name}")
         @DeleteMapping("/${pojo.reference.name}/{${pojo.reference.name}}")
         public int deleteBy${pojo.reference.name?cap_first}(@PathVariable ${pojo.reference.type.simpleName} ${pojo.reference.name}){
-        return  ${pojo.name?uncap_first}Service.deleteBy${pojo.reference.name?cap_first}(${pojo.reference.name});
+            return  ${pojo.name?uncap_first}Service.deleteBy${pojo.reference.name?cap_first}(${pojo.reference.name});
         }
 
     </#if>
@@ -97,7 +97,7 @@ public List<${pojo.name}Vo> findAll(){
         @ApiOperation("Deletes a ${pojo.name?uncap_first} by ${fieldGeneric.pojo.reference.name} of ${fieldGeneric.name}")
         @DeleteMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.reference.name}/{${fieldGeneric.pojo.reference.name}}")
         public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(@PathVariable ${fieldGeneric.pojo.reference.type.simpleName} ${fieldGeneric.pojo.reference.name}){
-        return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.name});
+            return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.reference.name?cap_first}(${fieldGeneric.pojo.reference.name});
         }
         </#if>
     <#if (fieldGeneric.pojo.id)??>
@@ -109,7 +109,7 @@ public List<${pojo.name}Vo> findAll(){
             @ApiOperation("Deletes ${pojo.name?uncap_first} by ${fieldGeneric.pojo.id.name} of ${fieldGeneric.name}")
             @DeleteMapping("/${fieldGeneric.name}/${fieldGeneric.pojo.id.name}/{${fieldGeneric.pojo.id.name}}")
             public int deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(@PathVariable ${fieldGeneric.pojo.id.type.simpleName} ${fieldGeneric.pojo.id.name}){
-            return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name});
+                return ${pojo.name?uncap_first}Service.deleteBy${fieldGeneric.name?cap_first}${fieldGeneric.pojo.id.name?cap_first}(${fieldGeneric.pojo.id.name});
             }
         </#if>
             </#list>
