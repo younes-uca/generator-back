@@ -12,7 +12,7 @@
                     </div>
                 </p-toolbar>
                 <p-table #dt [value]="${pojo.name?uncap_first}s" [columns]="cols" [rows]="4" [paginator]="true"
-                     [(selection)]="selected${pojo.name}" [rowHover]="true"
+                     [(selection)]="selected${pojo.name}" [rowHover]="true" *ngIf="${pojo.name?uncap_first}s.length>0;else empty"
                     dataKey="id" styleClass="p-datatable-customers"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true">
@@ -67,11 +67,11 @@
                 </p-table>
             </div>
         </div>
-    <!--      <ng-template #empty>
+         <ng-template #empty>
             <div style="display: flex;justify-content: center;height: 100vh; background-color: blueviolet;">
                 <h1 style="font-size: 5rem;margin-top: 30vh;color: wheat;">Aucune ${pojo.name?uncap_first}</h1>
             </div>
-        </ng-template>  -->
+        </ng-template>  
 
         <app-${pojo.name?uncap_first}-create></app-${pojo.name?uncap_first}-create>
         <app-${pojo.name?uncap_first}-edit></app-${pojo.name?uncap_first}-edit>

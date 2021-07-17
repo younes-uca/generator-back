@@ -57,7 +57,7 @@ export class ${pojo.name}ListComponent implements OnInit {
     public delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
         this.${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first}).subscribe(status=>{
           if(status > 0){
-           const position = this.${pojo.name?uncap_first}s.indexOf(this.selected${pojo.name});
+           const position = this.${pojo.name?uncap_first}s.indexOf(${pojo.name?uncap_first});
            position > -1 ? this.${pojo.name?uncap_first}s.splice(position, 1) : false;
           }
         },error=>console.log(error))
