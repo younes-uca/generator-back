@@ -68,8 +68,8 @@
             </div>
         </div>
          <ng-template #empty>
-            <div style="display: flex;justify-content: center;height: 100vh; background-color: blueviolet;">
-                <h1 style="font-size: 5rem;margin-top: 30vh;color: wheat;">Aucune ${pojo.name?uncap_first}</h1>
+            <div style="display: flex;justify-content: center;height: 50vh; background-color: rgb(123, 149, 165);">
+                <h1 style="font-size: 5rem;margin-top: 20vh;color: white;">Aucune ${pojo.name?uncap_first}</h1>
             </div>
         </ng-template>  
 
