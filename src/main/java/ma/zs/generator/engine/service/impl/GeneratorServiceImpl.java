@@ -51,8 +51,6 @@ public class GeneratorServiceImpl implements GeneratorService {
             System.out.println("pojo = " + pojo);
         }
         userConfig.setPojos(pojoService.validatePojos(userConfig.getPojos()));
-        System.out.println("*******************");
-        System.out.println(userConfig.getPojos().get(0).getFieldsSimple().toString());
         if (userConfig.getPojos().size() == 0)
             return null;
 

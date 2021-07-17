@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+<#list pojo.fieldsSimple as simpleField>
+  <#if simpleField.type.simpleName == "Date">
+import * as moment from 'moment';
+      <#assign dateFieldName = simpleField.name>
+  </#if>
+</#list>
 import {${pojo.name}Vo} from '../model/${pojo.name}.model';
 <#list pojo.types as type>
   <#if pojo.name != type.simpleName>
@@ -21,14 +27,14 @@ export class ${pojo.name}Service {
      private _create${pojo.name}Dialog: boolean;
      private _edit${pojo.name}Dialog: boolean;
      private _view${pojo.name}Dialog: boolean;
-     
+     public edit${pojo.name}$ = new BehaviorSubject<boolean>(false);
 
 
     // getters and setters
 
 
     get ${pojo.name?uncap_first}s(): Array<${pojo.name}Vo> {
-           return this._${pojo.name?uncap_first}s;
+        return this._${pojo.name?uncap_first}s == null ? this._${pojo.name?uncap_first}s =   new Array<${pojo.name}Vo>() : this._${pojo.name?uncap_first}s;
        }
     set ${pojo.name?uncap_first}s(value: Array<${pojo.name}Vo>) {
         this._${pojo.name?uncap_first}s = value;
@@ -74,11 +80,15 @@ export class ${pojo.name}Service {
     }
     
     public save(): Observable<${pojo.name}Vo> {
-        return this.http.post<${pojo.name}Vo>(this.API, this.selected${pojo.name});
+        <#if dateFieldName??>
+           return this.http.post<${pojo.name}Vo>(this.API, {...this.selected${pojo.name},${dateFieldName}: moment(this.selected${pojo.name}.${dateFieldName}).format("YYYY-MM-DD")});
+         <#else>
+         return this.http.post<${pojo.name}Vo>(this.API, this.selected${pojo.name});
+        </#if>
     }
     
     delete(${pojo.name?uncap_first}: ${pojo.name}Vo) {
-         return this.http.delete<number>("this.API"+"/id/"+${pojo.name?uncap_first}.id);
+         return this.http.delete<number>(this.API+"/id/"+${pojo.name?uncap_first}.id);
     }
 
 

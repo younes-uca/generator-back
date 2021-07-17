@@ -23,6 +23,7 @@ public class YamlTextPojoReaderRest {
     @PostMapping("/convert/")
     public List<Pojo> convert(@RequestBody RequestVo requestVo) throws IOException {
         List<Pojo> result = yamlTextPojoReader.convert(requestVo.getYamlText());
+
         return result;
 
     }

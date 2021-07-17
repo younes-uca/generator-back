@@ -268,11 +268,7 @@ DemandeDocumennt:
     messageResponsable: String
     eatDemandeDocumennt: EatDemandeDocumennt
     categorieDemandeDocumennt: CategorieDemandeDocumennt
-<<<<<<< HEAD
     Responsable: Responsable
-=======
-    responsable: Responsable
->>>>>>> d2cf9bf339e306f9d14a8770b117c9aac4dc8eff
 Commande:
     id: Long ID
     reference: String REF

@@ -1,17 +1,37 @@
-<p-dialog [(visible)]="edit${pojo.name}Dialog" [style]="{width: '450px'}" header="${pojo.name} Create" [modal]="true"
-    styleClass="p-fluid">
-    <ng-template pTemplate="content">
-         <#list pojo.fields as field>
-         <div class="p-field">
-            <label for="${field?index}">${field.name}</label>
-            <input type="text" pInputText id="${field?index}" [(ngModel)]="selected${pojo.name}.${field.name}" required autofocus />
+<p-dialog [(visible)]="edit${pojo.name}Dialog" [contentStyle]="{minHeight: '30vw'}" [style]="{width: '50vw'}" header="${pojo.name} Create" [formGroup]="edit${pojo.name}Form" [modal]="true"
+  >
+ <#list pojo.fieldsSimple as field>
+    <div class="p-fluid">
+    <#if field.type.simpleName == "Date">
+        <div class="p-field p-grid">
+            <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
+            <div class="p-col-12 p-md-10">
+                <p-calendar  formControlName="${field.name}" dateFormat="dd.mm.yy"></p-calendar>
+            </div>
         </div>
-        </#list>
-    </ng-template>
+    <#elseif field.type.simpleName == "String">
+        <div class="p-field p-grid">
+            <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
+            <div class="p-col-12 p-md-10">
+                <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="${field.name}" id="${field?index}" formControlName="${field.name}" required autofocus />
+            </div>
+        </div>
+    <#else>
+        <#if field.type.simpleName != "Long">  
+            <div class="p-field p-grid">
+                <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
+                <div class="p-col-12 p-md-10">
+                <p-inputNumber class="p-mb-2 p-mr-2"  id="${field?index}" placeholder="${field.name}"  formControlName="${field.name}"></p-inputNumber>
+                </div>
+            </div>
+        </#if>
+  </#if>
+    
+    </div>
+  </#list>  
    
-   <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-mr-2"
             (click)="hideEditDialog()"></button>
-        <button pButton pRipple label="Edit" icon="pi pi-check" class="p-button-text" (click)="edit()"></button>
-    </ng-template>
+            <button pButton pRipple label="Edit" icon="pi pi-times" class="p-button-text p-mr-2"
+            (click)="submit()"></button>
 </p-dialog>

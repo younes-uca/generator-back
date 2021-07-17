@@ -60,6 +60,6 @@ export class AppMenuComponent implements OnInit{
          routerLink: ["/${pojo.name?uncap_first}/crud"],
          },
         </#list>
-        ],
-      }
+        ]
+  }
 }

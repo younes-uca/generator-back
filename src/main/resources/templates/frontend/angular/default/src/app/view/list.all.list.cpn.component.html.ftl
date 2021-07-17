@@ -6,19 +6,10 @@
         <div>
             <div class="card">
                 <p-toolbar styleClass="p-mb-4">
-                    <ng-template pTemplate="left">
+                    <div>
                         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
-                            (click)="openCreate${pojo.name}()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2"
-                            (click)="deleteMultiple()" [disabled]="!${pojo.name?uncap_first}Selections || !${pojo.name?uncap_first}Selections.length"></button>
-                    </ng-template>
-
-                    <ng-template pTemplate="right">
-                        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
-                            chooseLabel="Import" class="p-mr-2 p-mb-2 p-d-inline-block"></p-fileUpload>
-                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
-                            (click)="dt.exportCSV()"></button>
-                    </ng-template>
+                             (click)="openCreate${pojo.name}()"></button>
+                    </div>
                 </p-toolbar>
                 <p-table #dt [value]="${pojo.name?uncap_first}s" [columns]="cols" [rows]="4" [paginator]="true"
                      [(selection)]="selected${pojo.name}" [rowHover]="true"
@@ -39,7 +30,7 @@
                             <th style="width: 3rem">
                                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                             </th>
-                            <#list pojo.fields as field>
+                            <#list pojo.fieldsSimple as field>
                             <th>${field.name}</th>
                             </#list>
                         </tr>
@@ -49,14 +40,18 @@
                             <td>
                                 <p-tableCheckbox [value]="${pojo.name?uncap_first}"></p-tableCheckbox>
                             </td>
-                               <#list pojo.fields as field>
-                                  <td>{{${pojo.name?uncap_first}.${field.name}}}</td>
+                            <#list pojo.fieldsSimple as field>
+                                <#if field.type.simpleName == "Date">
+                                    <td>{{${pojo.name?uncap_first}.${field.name} | date:'dd/MM/yyyy' }}</td>
+                                    <#else>
+                                    <td>{{${pojo.name?uncap_first}.${field.name} }}
+                                   </#if>
                             </#list>
                          
 
                             <td>
                                 <button pButton pRipple icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success p-mr-2" (click)="edit(${pojo.name?uncap_first})"></button>
+                                    class="p-button-rounded p-button-success p-mr-2" (click)="edit${pojo.name}(${pojo.name?uncap_first})"></button>
                                 <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
                                     (click)="view${pojo.name}(${pojo.name?uncap_first})"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"

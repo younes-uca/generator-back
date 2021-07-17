@@ -19,16 +19,20 @@ constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Servi
 
 public save(){
 
-    this.${pojo.name?uncap_first}Service.save().subscribe(${pojo.name}=>{
+    this.${pojo.name?uncap_first}Service.save().subscribe(${pojo.name?uncap_first}=>{
           
-       this.${pojo.name?uncap_first}s.push({...${pojo.name}});
+       this.${pojo.name?uncap_first}s.push({...${pojo.name?uncap_first}});
        this.create${pojo.name}Dialog = false;
        this.selected${pojo.name} = new ${pojo.name}Vo();
     },error=>{
         console.log(error);
     })
 }
+// methods 
 
+hideCreateDialog(){
+    this.create${pojo.name}Dialog  = false;
+}
 
 // getters and setters 
 

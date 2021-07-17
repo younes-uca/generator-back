@@ -21,6 +21,12 @@ export class ${pojo.name}Vo {
    <#if fieldSimple.type.simpleName == "Boolean">
     public ${fieldSimple.name}: boolean;
    </#if>
+      <#if fieldSimple.type.simpleName == "Date">
+    public ${fieldSimple.name}: string;
+   </#if>
+       <#if fieldSimple.type.simpleName == "Integer">
+    public ${fieldSimple.name}: number;
+   </#if>
   </#list>
     <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
         <#if pojo.id.name != fieldSimpleNumberOrDate.name>
@@ -30,11 +36,11 @@ export class ${pojo.name}Vo {
     </#list>
     <#list pojo.fieldsGeneric as fieldGeneric>
     <#if fieldGeneric.pojo??> 
-    public ${fieldGeneric.name}Vo: ${fieldGeneric.pojo.name}Vo = new ${fieldGeneric.pojo.name}Vo();
+    public ${fieldGeneric.name}Vo: ${fieldGeneric.pojo.name}Vo;
         <#else> </#if>
     </#list>
     <#list pojo.fieldsList as fieldList>
-    public ${fieldList.name}Vo: Array<${fieldList.pojo.name}Vo> = new Array<${fieldList.pojo.name}Vo>();
+    public ${fieldList.name}Vo: Array<${fieldList.pojo.name}Vo>;
     </#list>
 
 

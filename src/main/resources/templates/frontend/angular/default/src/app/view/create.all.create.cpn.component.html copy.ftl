@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="create${pojo.name}Dialog" [style]="{width: '50vw'}" header="${pojo.name} Create" [modal]="true"
+<p-dialog [(visible)]="create${pojo.name}Dialog" [style]="{width: '50vw'}" [contentStyle]="{minHeight: '30vw'}" header="${pojo.name} Create" [modal]="true"
 >     
  <#list pojo.fieldsSimple as field>
 <div class="p-fluid">

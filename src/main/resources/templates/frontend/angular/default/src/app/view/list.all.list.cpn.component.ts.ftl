@@ -35,9 +35,17 @@ export class ${pojo.name}ListComponent implements OnInit {
             </#list>
         ];
     }
+    
+    public edit${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
+         this.selected${pojo.name} = ${pojo.name?uncap_first};
+         this.edit${pojo.name}Dialog = true;
+         this.${pojo.name?uncap_first}Service.edit${pojo.name}$.next(true);
+    }
+    
+
 
     public view${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-         this.selected${pojo.name} = {...${pojo.name?uncap_first}};
+         this.selected${pojo.name} = ${pojo.name?uncap_first};
         this.view${pojo.name}Dialog = true;
     }
     
@@ -71,6 +79,9 @@ export class ${pojo.name}ListComponent implements OnInit {
     set ${pojo.name?uncap_first}Selections(value: Array<${pojo.name}Vo>) {
         this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}Selections = value;
        }
+   
+     
+
 
     get selected${pojo.name}():${pojo.name}Vo {
            return this.${pojo.name?uncap_first}Service.selected${pojo.name};
@@ -86,8 +97,12 @@ export class ${pojo.name}ListComponent implements OnInit {
         this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog= value;
        }
     
- 
-
+    get edit${pojo.name}Dialog():boolean {
+           return this.${pojo.name?uncap_first}Service.edit${pojo.name}Dialog;
+       }
+    set edit${pojo.name}Dialog(value: boolean) {
+        this.${pojo.name?uncap_first}Service.edit${pojo.name}Dialog= value;
+       }
     get view${pojo.name}Dialog():boolean {
            return this.${pojo.name?uncap_first}Service.view${pojo.name}Dialog;
        }

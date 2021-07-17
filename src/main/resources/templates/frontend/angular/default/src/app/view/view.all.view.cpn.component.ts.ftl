@@ -29,10 +29,10 @@ export class ${pojo.name}ViewComponent implements OnInit {
 
    // getters and setters
     get view${pojo.name}Dialog():boolean {
-        return this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog;
+        return this.${pojo.name?uncap_first}Service.view${pojo.name}Dialog;
         }
     set view${pojo.name}Dialog(value: boolean) {
-        this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog= value;
+        this.${pojo.name?uncap_first}Service.view${pojo.name}Dialog= value;
         }
     
     get selected${pojo.name}():${pojo.name}Vo {
