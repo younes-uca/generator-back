@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {${pojo.name}Service} from '../../../controller/service/${pojo.name}.service';
-import {${pojo.name}Vo} from '../../../controller/model/${pojo.name?uncap_first}.model';
+import {${pojo.name}Vo} from '../../../controller/model/${pojo.name}.model';
 <#list pojo.types as type>
   <#if pojo.name != type.simpleName>
 import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}.model';
@@ -12,66 +12,50 @@ import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}
   templateUrl: './${pojo.name?uncap_first}-create.component.html',
   styleUrls: ['./${pojo.name?uncap_first}-create.component.css']
 })
-export class ${pojo.name}CreateComponent implements OnInit {
-  constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service) { }
+export class ${pojo.name}CreateComponent  {
 
-   ngOnInit(): void {
-      <#list pojo.fieldsGeneric as fieldGeneric>
-      <#if fieldGeneric.comboBox>
-      this.findAll${fieldGeneric.name}s();
-      </#if>
-      </#list>
-    }
+constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service) { }
+// methods 
 
-   get ${pojo.name?uncap_first}(): ${pojo.name}Vo {
-    return this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first};
-  }
+public save(){
 
-  <#list pojo.fieldsGeneric as fieldGeneric>
-  <#if fieldGeneric.comboBox>
-  get ${fieldGeneric.name}s(): Array<${fieldGeneric.pojo.name}Vo> {
-   return this.${pojo.name?uncap_first}Service.${fieldGeneric.name}s;
-  }
-  </#if>
-  </#list>
+    this.${pojo.name?uncap_first}Service.save().subscribe(${pojo.name?uncap_first}=>{
+          
+       this.${pojo.name?uncap_first}s.push({...${pojo.name?uncap_first}});
+       this.create${pojo.name}Dialog = false;
+       this.selected${pojo.name} = new ${pojo.name}Vo();
+    },error=>{
+        console.log(error);
+    })
+}
+// methods 
 
-  <#if pojo.hasList>
-  <#list pojo.fieldsList as fieldList>
-  get ${fieldList.pojo.name?uncap_first}(): ${fieldList.pojo.name}Vo {
-    return this.${pojo.name?uncap_first}Service.${fieldList.pojo.name?uncap_first};
-  }
-
-  add${fieldList.pojo.name}() {
-   return this.${pojo.name?uncap_first}Service.add${fieldList.pojo.name}();
-  }
-
-  remove${fieldList.pojo.name}(i: number) {
-   this.${pojo.name?uncap_first}Service.remove${fieldList.pojo.name}(i);
-  }
-  </#list>
-  </#if>
-   save${pojo.name?cap_first}() {
-    this.${pojo.name?uncap_first}Service.save${pojo.name?cap_first}();
-  }
-
-  <#list pojo.fieldsGeneric as fieldGeneric>
-  <#if fieldGeneric.comboBox>
-   findAll${fieldGeneric.name}s() {
-     this.${pojo.name?uncap_first}Service.findAll${fieldGeneric.name}s();
-   }
-  </#if>
-  </#list>
-
-<#if (pojo.compactView)>
-get ${pojo.name?uncap_first}ShowCreate (): boolean  {
-  return this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}ShowCreate;
+hideCreateDialog(){
+    this.create${pojo.name}Dialog  = false;
 }
 
-set ${pojo.name?uncap_first}ShowCreate (value: boolean ) {
-  this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}ShowCreate = value ;
-}
-public createHide(){
-       this.${pojo.name?uncap_first}Service.createHide();
-}
-</#if>
+// getters and setters 
+
+get ${pojo.name?uncap_first}s(): Array<${pojo.name}Vo> {
+    return this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}s;
+       }
+set ${pojo.name?uncap_first}s(value: Array<${pojo.name}Vo>) {
+        this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}s = value;
+       } 
+
+ get selected${pojo.name}():${pojo.name}Vo {
+           return this.${pojo.name?uncap_first}Service.selected${pojo.name};
+       }
+    set selected${pojo.name}(value: ${pojo.name}Vo) {
+        this.${pojo.name?uncap_first}Service.selected${pojo.name} = value;
+       }
+  
+   get create${pojo.name}Dialog():boolean {
+           return this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog;
+       }
+    set create${pojo.name}Dialog(value: boolean) {
+        this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog= value;
+       }
+
+
 }

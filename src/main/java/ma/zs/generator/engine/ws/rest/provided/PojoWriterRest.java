@@ -3,6 +3,7 @@
  */
 package ma.zs.generator.engine.ws.rest.provided;
 
+
 import freemarker.template.TemplateException;
 import ma.zs.generator.engine.bean.Pojo;
 import ma.zs.generator.engine.service.facade.PojoWriter;

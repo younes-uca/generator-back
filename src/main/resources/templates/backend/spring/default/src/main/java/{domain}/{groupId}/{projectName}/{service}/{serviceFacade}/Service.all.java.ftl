@@ -37,7 +37,7 @@ ${pojo.name} findBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.i
 * @param ${pojo.id.name} - id of ${pojo.name} to be deleted
 *
 */
-void deleteBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.id.name});
+int deleteBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.id.name});
 
 <#list pojo.fieldsGeneric as fieldGeneric>
     <#if (fieldGeneric.pojo.reference)??>

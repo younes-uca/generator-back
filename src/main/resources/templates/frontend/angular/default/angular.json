@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "4a08fca2-0dfe-45c8-a4f8-d7d0149a48c6"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "helloWord": {
+    "angular-freemarker": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +16,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/helloWord",
+            "outputPath": "dist/angular-freemarker",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,18 +27,20 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.css",
-              "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/nova-light/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+         
+              "src/styles.scss"
             ],
-            "scripts": ["./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            "scripts": [
+                "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.js"
             ]
           },
-         
+          "allowedCommonJsDependencies": [
+              "@fullcalendar/daygrid",
+              "@fullcalendar/timegrid",
+              "@fullcalendar/interaction",
+              "chart.js"
+            ],
           "configurations": {
             "production": {
               "fileReplacements": [
@@ -47,7 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -70,18 +74,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "helloWord:build"
+            "browserTarget": "angular-freemarker:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "helloWord:build:production"
+              "browserTarget": "angular-freemarker:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "helloWord:build"
+            "browserTarget": "angular-freemarker:build"
           }
         },
         "test": {
@@ -96,9 +100,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+                "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-typescript.js"
+            ]
           }
         },
         "lint": {
@@ -118,19 +125,21 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "helloWord:serve"
+            "devServerTarget": "angular-freemarker:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "helloWord:serve:production"
+              "devServerTarget": "angular-freemarker:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "helloWord",
-  "cli": {
-    "analytics": "fddf20ae-4f66-4beb-a880-cfee58212f13"
-  }
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  },
+  "defaultProject": "angular-freemarker"
 }

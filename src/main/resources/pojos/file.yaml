@@ -268,7 +268,7 @@ DemandeDocumennt:
     messageResponsable: String
     eatDemandeDocumennt: EatDemandeDocumennt
     categorieDemandeDocumennt: CategorieDemandeDocumennt
-    responsable: Responsable
+    Responsable: Responsable
 Commande:
     id: Long ID
     reference: String REF

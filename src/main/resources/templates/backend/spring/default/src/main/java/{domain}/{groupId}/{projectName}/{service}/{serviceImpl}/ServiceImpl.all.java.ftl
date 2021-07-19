@@ -101,8 +101,10 @@ return ${pojo.name?uncap_first}Dao.getOne(${pojo.id.name});
 }
 
 @Transactional
-public void deleteBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.id.name}){
-${pojo.name?uncap_first}Dao.deleteBy${pojo.id.name?cap_first}(${pojo.id.name});
+public int deleteBy${pojo.id.name?cap_first}(${pojo.id.type.simpleName} ${pojo.id.name}){
+    if(${pojo.name?uncap_first}Dao.findById(${pojo.id.name}) == null) return 0;
+    ${pojo.name?uncap_first}Dao.deleteBy${pojo.id.name?cap_first}(${pojo.id.name});
+    return 1;
 }
 @Override
 public ${pojo.name} save (${pojo.name} ${pojo.name?uncap_first}){
