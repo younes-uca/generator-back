@@ -17,9 +17,8 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionDao dao;
 
     @Override
-    public int save(Permission permission) {
-        this.dao.save(permission);
-        return 1;
+    public Permission save(Permission permission) {
+        return this.dao.save(permission);
     }
 
     @Override
