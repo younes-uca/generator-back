@@ -7,13 +7,13 @@ import java.util.List;
  * @author MoiseGui
  */
 @Entity
-public class Role {
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @ManyToMany
-    private List<Permission> permissions;
+    private List<Role> roles;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<Permission> getPermissions() {
-        return permissions;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
