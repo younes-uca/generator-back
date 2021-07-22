@@ -14,6 +14,10 @@ public class Role {
     private String name;
     @ManyToMany
     private List<Permission> permissions;
+    
+    @OneToMany
+    private List<MenuRole> menuRoles;
+    
 
     public Long getId() {
         return id;
