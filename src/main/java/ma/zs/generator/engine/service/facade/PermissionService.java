@@ -8,7 +8,7 @@ import java.util.List;
  * @author MoiseGui
  */
 public interface PermissionService {
-    public int save(Permission permission);
+    public Permission save(Permission permission);
     public int deleteById(Long id);
     public List<Permission> findAll();
     public Permission findById(Long id);
