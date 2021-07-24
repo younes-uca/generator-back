@@ -2,13 +2,13 @@ package ma.zs.generator.engine.bean;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+
 @Entity
 public class MenuRole {
 	@ManyToOne
 	private Menu menu;
 	@ManyToOne
-	private Role role;
+	private RoleConfig role;
 	
 	private String order;
 
@@ -24,10 +24,10 @@ public class MenuRole {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	public Role getRole() {
+	public RoleConfig getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(RoleConfig role) {
 		this.role = role;
 	}
 

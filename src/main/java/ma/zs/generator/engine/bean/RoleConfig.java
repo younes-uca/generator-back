@@ -7,7 +7,7 @@ import java.util.List;
  * @author MoiseGui
  */
 @Entity
-public class Role {
+public class RoleConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
