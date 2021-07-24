@@ -1,21 +1,14 @@
 package ma.zs.generator.engine.bean;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
  * @author MoiseGui
  */
-@Entity
 public class RoleConfig {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToMany
     private List<Permission> permissions;
-    
-    @OneToMany(mappedBy = "role")
     private List<MenuRole> menuRoles;
     
 
