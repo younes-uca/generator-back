@@ -1,7 +1,7 @@
 package ma.zs.generator.project.config;
 
 import ma.zs.generator.engine.bean.Pojo;
-import ma.zs.generator.engine.bean.Role;
+import ma.zs.generator.engine.bean.RoleConfig;
 import ma.zs.generator.project.bean.ProjectTemplate;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class UserConfig {
 
     private ProjectTemplate backend;
     private boolean wantBackend = true;
-    private List<Role> roles;
+    private List<RoleConfig> roles;
     private ProjectTemplate frontend;
     private boolean wantFrontend = true;
 
@@ -74,11 +74,11 @@ public class UserConfig {
         this.config = config;
     }
 
-    public List<Role> getRoles() {
+    public List<RoleConfig> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<RoleConfig> roles) {
         this.roles = roles;
     }
 

@@ -22,7 +22,7 @@ public class Pojo {
     private String name;
     private Field id;
     private Field reference;
-    private Role role;
+    private RoleConfig role;
     private List<Field> fields;
     @JsonIgnore
     private Set<Type> types;
@@ -212,11 +212,11 @@ public class Pojo {
         this.compactView = compactView;
     }
 
-    public Role getRole() {
+    public RoleConfig getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleConfig role) {
         this.role = role;
     }
 
