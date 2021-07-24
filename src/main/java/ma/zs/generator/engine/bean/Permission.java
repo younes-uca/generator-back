@@ -13,7 +13,7 @@ public class Permission {
     private Long id;
     private String name;
     @ManyToMany
-    private List<Role> roles;
+    private List<RoleConfig> roles;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Permission {
         this.name = name;
     }
 
-    public List<Role> getRoles() {
+    public List<RoleConfig> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<RoleConfig> roles) {
         this.roles = roles;
     }
 }

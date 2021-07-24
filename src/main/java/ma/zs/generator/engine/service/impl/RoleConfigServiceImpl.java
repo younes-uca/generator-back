@@ -1,8 +1,8 @@
 package ma.zs.generator.engine.service.impl;
 
-import ma.zs.generator.engine.bean.Role;
+import ma.zs.generator.engine.bean.RoleConfig;
 import ma.zs.generator.engine.dao.RoleDao;
-import ma.zs.generator.engine.service.facade.RoleService;
+import ma.zs.generator.engine.service.facade.RoleConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import java.util.List;
  * @author MoiseGui
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleConfigServiceImpl implements RoleConfigService {
     @Autowired
     private RoleDao dao;
 
     @Override
-    public Role save(Role role) {
+    public RoleConfig save(RoleConfig role) {
         return this.dao.save(role);
     }
 
@@ -29,22 +29,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findAll() {
+    public List<RoleConfig> findAll() {
         return this.dao.findAll();
     }
 
     @Override
-    public Role findById(Long id) {
+    public RoleConfig findById(Long id) {
         return this.dao.findById(id).orElse(null);
     }
 
     @Override
-    public Role findByName(String name) {
+    public RoleConfig findByName(String name) {
         return this.dao.findByName(name);
     }
 
     @Override
-    public List<Role> findAllByPermissionName(String namePermission) {
+    public List<RoleConfig> findAllByPermissionName(String namePermission) {
         return this.dao.findAllByPermissionName(namePermission);
     }
 }

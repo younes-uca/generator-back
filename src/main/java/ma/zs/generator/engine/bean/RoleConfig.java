@@ -7,13 +7,17 @@ import java.util.List;
  * @author MoiseGui
  */
 @Entity
-public class Role {
+public class RoleConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @ManyToMany
     private List<Permission> permissions;
+    
+    @OneToMany
+    private List<MenuRole> menuRoles;
+    
 
     public Long getId() {
         return id;
