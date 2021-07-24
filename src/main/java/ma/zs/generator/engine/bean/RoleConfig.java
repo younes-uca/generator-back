@@ -15,7 +15,7 @@ public class RoleConfig {
     @ManyToMany
     private List<Permission> permissions;
     
-    @OneToMany
+    @OneToMany(mappedBy = "role")
     private List<MenuRole> menuRoles;
     
 

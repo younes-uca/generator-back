@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Menu {
@@ -16,9 +18,9 @@ public class Menu {
 	private long id;
 	private String libelle;
 	private String icone;
-	@OneToMany
+	@OneToMany(mappedBy = "menu")
 	List<MenuRole> menuRoles;
-	
+    @Transient
 	private Pojo pojo;
 	@ManyToMany
 	List<Menu> menuItems;

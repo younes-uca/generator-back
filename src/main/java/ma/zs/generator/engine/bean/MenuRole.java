@@ -14,15 +14,32 @@ public class MenuRole {
 	private Menu menu;
 	@ManyToOne
 	private RoleConfig role;
+<<<<<<< HEAD
 
 	private String order;
+=======
+	
+	private String ordre;
+>>>>>>> da1e42665b32f6dc17c3f98afd8edb87c5ef5e3d
 
-	public String getOrder() {
-		return order;
+	
+	public long getId() {
+		return id;
 	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getOrdre() {
+		return ordre;
+	}
+<<<<<<< HEAD
 
 	public void setOrder(String order) {
 		this.order = order;
+=======
+	public void setOrdre(String ordre) {
+		this.ordre = ordre;
+>>>>>>> da1e42665b32f6dc17c3f98afd8edb87c5ef5e3d
 	}
 
 	public Menu getMenu() {

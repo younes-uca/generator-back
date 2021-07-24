@@ -12,6 +12,6 @@ import ma.zs.generator.engine.bean.Menu;
 public interface MenuDao extends JpaRepository<Menu, Long>{
 public Menu findByLibelle(String libelle);
 
-@Query("SELECT m FROM Menu m, Role r, Menu_Role mr  WHERE m.id = mr.menu and mr.role = r.id and r.name = ?1")
-public List<Menu> findAllByRoleName(String name);
+//@Query("SELECT m FROM Menu m, Role r, Menu_Role mr  WHERE m.id = mr.menu and mr.role = r.id and r.name = ?1")
+//public List<Menu> findAllByRoleName(String name);
 }
