@@ -59,10 +59,12 @@ public class GeneratorServiceImpl implements GeneratorService {
             if (generatedProject.exists())
                 System.out.println(FileUtil.deleteDirectory(generatedProject));
             if (userConfig.isWantBackend()) {
+                //TODO: Modify the following method and make it use the roles and the admin
                 generateBackend(userConfig);
                 System.out.println("back end generated");
             }
             if (userConfig.isWantFrontend()) {
+                //TODO: Modify the following method and make it use the roles, and the menus
                 generateFrontend(userConfig);
                 System.out.println("front end generated");
             }
