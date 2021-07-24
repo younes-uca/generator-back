@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface PermissionDao extends JpaRepository<Permission, Long> {
     public Permission findByName(String name);
-    public List<Permission> findAllByRoleName(String nameRole);
+    //public List<Permission> findAllByRoleName(String nameRole);
 }

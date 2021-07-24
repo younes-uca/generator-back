@@ -44,6 +44,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> findAllByRoleName(String nameRole) {
-        return this.dao.findAllByRoleName(nameRole);
+         //this.dao.findAllByRoleName(nameRole);
+    	return null;
     }
 }
