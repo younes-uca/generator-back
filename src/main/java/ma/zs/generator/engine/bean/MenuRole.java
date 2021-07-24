@@ -1,6 +1,7 @@
 package ma.zs.generator.engine.bean;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -11,6 +12,7 @@ public class MenuRole {
 	private RoleConfig role;
 	
 	private String order;
+
 
 	public String getOrder() {
 		return order;
@@ -30,5 +32,6 @@ public class MenuRole {
 	public void setRole(RoleConfig role) {
 		this.role = role;
 	}
+
 
 }
