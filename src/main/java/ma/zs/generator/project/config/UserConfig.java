@@ -7,7 +7,7 @@ import ma.zs.generator.project.bean.ProjectTemplate;
 import java.util.List;
 
 /**
- * @author Qada
+ * @author MoiseGui
  */
 public class UserConfig {
 
