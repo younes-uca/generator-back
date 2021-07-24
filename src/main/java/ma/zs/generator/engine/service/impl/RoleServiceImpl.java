@@ -4,6 +4,7 @@ import ma.zs.generator.engine.bean.Role;
 import ma.zs.generator.engine.dao.RoleDao;
 import ma.zs.generator.engine.service.facade.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
