@@ -1,6 +1,6 @@
 package ma.zs.generator.engine.bean;
 
-public class User {
+public class Admin {
     private String name;
     private String email;
     private String password;

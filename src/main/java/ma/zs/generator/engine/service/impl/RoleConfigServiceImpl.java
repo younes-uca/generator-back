@@ -44,6 +44,6 @@ public class RoleConfigServiceImpl implements RoleConfigService {
 
     @Override
     public List<RoleConfig> findAllByPermissionName(String namePermission) {
-        return this.dao.findAllByPermissionName(namePermission);
+        return this.dao.findAllByPermissionsName(namePermission);
     }
 }

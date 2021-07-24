@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface RoleConfigDao extends JpaRepository<RoleConfig, Long> {
     public RoleConfig findByName(String name);
-    public List<RoleConfig> findAllByPermissionName(String namePermission);
+    public List<RoleConfig> findAllByPermissionsName(String namePermission);
 }
