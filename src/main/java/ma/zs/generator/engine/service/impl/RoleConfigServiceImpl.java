@@ -1,7 +1,7 @@
 package ma.zs.generator.engine.service.impl;
 
 import ma.zs.generator.engine.bean.RoleConfig;
-import ma.zs.generator.engine.dao.RoleDao;
+import ma.zs.generator.engine.dao.RoleConfigDao;
 import ma.zs.generator.engine.service.facade.RoleConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class RoleConfigServiceImpl implements RoleConfigService {
     @Autowired
-    private RoleDao dao;
+    private RoleConfigDao dao;
 
     @Override
     public RoleConfig save(RoleConfig role) {
