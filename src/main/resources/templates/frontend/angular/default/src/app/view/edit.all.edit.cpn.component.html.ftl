@@ -1,37 +1,31 @@
-<p-dialog [(visible)]="edit${pojo.name}Dialog" [contentStyle]="{minHeight: '30vw'}" [style]="{width: '50vw'}" header="${pojo.name} Create" [formGroup]="edit${pojo.name}Form" [modal]="true"
-  >
- <#list pojo.fieldsSimple as field>
-    <div class="p-fluid">
-    <#if field.type.simpleName == "Date">
-        <div class="p-field p-grid">
-            <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
-            <div class="p-col-12 p-md-10">
+<p-dialog [(visible)]="edit${pojo.name}Dialog" [style]="{width: '450px'}" header="${pojo.name} Edit" [modal]="true"
+    styleClass="p-fluid" [formGroup]="edit${pojo.name}Form">
+    <ng-template pTemplate="content">
+    <#list pojo.fieldsSimple as field>
+        <#if field.type.simpleName == "Date">
+            <div class="p-field">
+                <label for="${field?index}">${field.name}</label>
                 <p-calendar  formControlName="${field.name}" dateFormat="dd.mm.yy"></p-calendar>
             </div>
-        </div>
-    <#elseif field.type.simpleName == "String">
-        <div class="p-field p-grid">
-            <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
-            <div class="p-col-12 p-md-10">
+        <#elseif field.type.simpleName == "String">
+            <div class="p-field">
+                <label for="${field?index}">${field.name}</label>
                 <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="${field.name}" id="${field?index}" formControlName="${field.name}" required autofocus />
             </div>
-        </div>
-    <#else>
-        <#if field.type.simpleName != "Long">  
-            <div class="p-field p-grid">
-                <label for="${field?index}" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">${field.name}</label>
-                <div class="p-col-12 p-md-10">
-                <p-inputNumber class="p-mb-2 p-mr-2"  id="${field?index}" placeholder="${field.name}"  formControlName="${field.name}"></p-inputNumber>
+        <#else>
+            <#if field.type.simpleName != "Long">  
+                <div class="p-field">
+                    <label for="${field?index}">${field.name}</label>
+                    <p-inputNumber class="p-mb-2 p-mr-2"  id="${field?index}" placeholder="${field.name}"  formControlName="${field.name}"></p-inputNumber>
                 </div>
-            </div>
+            </#if>
         </#if>
-  </#if>
-    
-    </div>
-  </#list>  
-   
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text p-mr-2"
+    </#list>  
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
             (click)="hideEditDialog()"></button>
-            <button pButton pRipple label="Edit" icon="pi pi-times" class="p-button-text p-mr-2"
-            (click)="submit()"></button>
+        <button pButton pRipple label="Edit" icon="pi pi-check" class="p-button-text" (click)="submit()"></button>
+    </ng-template>
 </p-dialog>

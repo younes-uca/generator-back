@@ -1,46 +1,46 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "4a08fca2-0dfe-45c8-a4f8-d7d0149a48c6"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-freemarker": {
-      "projectType": "application",
-      "schematics": {},
+    "roma": {
       "root": "",
       "sourceRoot": "src",
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-freemarker",
+            "outputPath": "dist/roma",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-         
               "src/styles.scss"
             ],
             "scripts": [
-                "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-typescript.js"
-            ]
-          },
-          "allowedCommonJsDependencies": [
+            ],
+            "allowedCommonJsDependencies": [
               "@fullcalendar/daygrid",
               "@fullcalendar/timegrid",
               "@fullcalendar/interaction",
               "chart.js"
-            ],
+            ]
+          },
           "configurations": {
             "production": {
               "fileReplacements": [
@@ -52,7 +52,9 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -61,11 +63,6 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
                 }
               ]
             }
@@ -74,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-freemarker:build"
+            "browserTarget": "roma:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-freemarker:build:production"
+              "browserTarget": "roma:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-freemarker:build"
+            "browserTarget": "roma:build"
           }
         },
         "test": {
@@ -95,16 +92,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-                "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-typescript.js"
+            "scripts": [],
+            "assets": [
+              "src/favicon.ico",
+              "src/upload.php",
+              "src/assets"
             ]
           }
         },
@@ -125,21 +120,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-freemarker:serve"
+            "devServerTarget": "roma:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-freemarker:serve:production"
+              "devServerTarget": "roma:serve:production"
             }
           }
         }
       }
     }
   },
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  },
-  "defaultProject": "angular-freemarker"
+  "defaultProject": "roma",
+  "cli": {
+    "analytics": "cc90cc9d-01f8-4bbf-b960-f1a3e99ea1dc"
+  }
 }

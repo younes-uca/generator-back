@@ -1,31 +1,38 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
+import { AppMainComponent } from './app.main.component';
+import { AppConfigComponent } from './app.config.component';
+import { AppTopBarComponent } from './app.topbar.component';
+import { AppRightMenuComponent } from './app.right-menu.component';
+import { AppFooterComponent } from './app.footer.component';
+import { AppMenuComponent } from './app.menu.component';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { AccordionModule } from 'primeng/accordion';
+import { PanelModule } from 'primeng/panel';
+import { TabViewModule } from 'primeng/tabview';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'angular-freemarker'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-freemarker');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angular-freemarker app is running!');
-  });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule, RouterTestingModule, ScrollPanelModule, AccordionModule,
+                PanelModule, TabViewModule, ProgressBarModule],
+            declarations: [
+                AppComponent,
+                AppMainComponent,
+                AppConfigComponent,
+                AppTopBarComponent,
+                AppMenuComponent,
+                AppRightMenuComponent,
+                AppFooterComponent,
+            ]
+        }).compileComponents();
+    }));
+    it('should create the app', async(() => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
 });
