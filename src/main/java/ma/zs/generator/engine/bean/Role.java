@@ -3,7 +3,9 @@ package ma.zs.generator.engine.bean;
 import javax.persistence.*;
 import java.util.List;
 
-
+/**
+ * @author MoiseGui
+ */
 @Entity
 public class Role {
     @Id
