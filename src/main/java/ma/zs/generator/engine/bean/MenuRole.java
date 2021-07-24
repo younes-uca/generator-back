@@ -1,24 +1,17 @@
 package ma.zs.generator.engine.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-@Entity
 public class MenuRole {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne
 	private Menu menu;
-	@ManyToOne
 	private RoleConfig role;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	private String order;
 =======
 	
+=======
+>>>>>>> f2f3edb5ce2b4a85d71b8e88a1aa0e19662535dc
 	private String ordre;
 >>>>>>> da1e42665b32f6dc17c3f98afd8edb87c5ef5e3d
 

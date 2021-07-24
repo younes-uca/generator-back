@@ -1,19 +1,15 @@
 package ma.zs.generator.engine.bean;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
  * @author MoiseGui
  */
-@Entity
 public class Permission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToMany
     private List<RoleConfig> roles;
+    private Pojo pojo;
 
     public Long getId() {
         return id;
@@ -37,5 +33,13 @@ public class Permission {
 
     public void setRoles(List<RoleConfig> roles) {
         this.roles = roles;
+    }
+
+    public Pojo getPojo() {
+        return pojo;
+    }
+
+    public void setPojo(Pojo pojo) {
+        this.pojo = pojo;
     }
 }

@@ -1,5 +1,6 @@
 package ma.zs.generator.project.config;
 
+import ma.zs.generator.engine.bean.Admin;
 import ma.zs.generator.engine.bean.Pojo;
 import ma.zs.generator.engine.bean.RoleConfig;
 import ma.zs.generator.project.bean.ProjectTemplate;
@@ -15,6 +16,7 @@ public class UserConfig {
 
     private ProjectTemplate backend;
     private boolean wantBackend = true;
+    private Admin admin;
     private List<RoleConfig> roles;
     private ProjectTemplate frontend;
     private boolean wantFrontend = true;

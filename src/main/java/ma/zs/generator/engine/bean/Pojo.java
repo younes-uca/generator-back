@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ma.zs.generator.engine.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author ismail
+ * @author MoiseGui
  */
 public class Pojo {
 
@@ -46,6 +41,8 @@ public class Pojo {
     private boolean hasDate;
 
     private boolean compactView = true;
+
+    private List<Permission> permissions;
 
 
     public Pojo() {
@@ -228,6 +225,14 @@ public class Pojo {
 
     public void setTypes(Set<Type> types) {
         this.types = types;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override
