@@ -2,6 +2,7 @@ package ma.zs.generator.engine.bean;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 @Entity
 public class MenuRole {
 	@ManyToOne
