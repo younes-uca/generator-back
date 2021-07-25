@@ -8,7 +8,36 @@
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
                        (click)="openCreate${pojo.name}()"></button>
+                     <button pButton pRipple label="Search"
+                        icon="pi pi-{{findByCriteriaShow?'angle-down':'angle-right'}}"
+                        class="p-button-success p-mr-2 p-mb-2"
+                        (click)="this.findByCriteriaShow = !this.findByCriteriaShow"></button>
                 </ng-template>
+                <ng-template pTemplate="right">
+                    <div class="" *ngIf="findByCriteriaShow">
+            <#list pojo.fieldsSimple as field>
+                    <#if field.reference >
+                    <input class=" p-mr-1" type="text" pInputText placeholder="${field.name}" 
+                             [(ngModel)]="search${pojo.name}.${field.name}" autofocus />
+                    </#if>
+            </#list>
+            <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
+                     <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
+                        <p-calendar class="p-mr-2" placeholder="dateMin" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate.name}Min"
+                                dateFormat="dd.mm.yy"></p-calendar>
+                        <p-calendar class="p-mr-2" placeholder="dateMin" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate.name}Max"
+                                dateFormat="dd.mm.yy"></p-calendar>
+                  <#elseif fieldSimpleNumberOrDate.type.simpleName == "String">
+                  <#else>
+                 <#if fieldSimpleNumberOrDate.type.simpleName != "Long">  
+              <p-inputNumber class="p-mr-2" placeholder="${fieldSimpleNumberOrDate.name}Min" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate.name}Min"></p-inputNumber>
+              <p-inputNumber class="p-mr-2" placeholder="${fieldSimpleNumberOrDate.name}Max" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate .name}Max"></p-inputNumber>
+              </#if>
+              </#if>
+            </#list>   
+            <button pButton pRipple label="Submit" icon="pi pi-sort-amount-down"class="p-button-info p-mr-2" (click)="searchRequest()"></button>
+                        </div>
+                    </ng-template>
             </p-toolbar>
 
             <p-table #dt [value]="${pojo.name?uncap_first}s" [columns]="cols" [rows]="4" [paginator]="true"
