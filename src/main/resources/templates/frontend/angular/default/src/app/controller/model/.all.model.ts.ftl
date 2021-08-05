@@ -7,7 +7,7 @@ import {${type.simpleName}Vo} from './${type.simpleName}.model';
 export class ${pojo.name}Vo {
    <#if pojo.id??> 
     public ${pojo.id.name}: number;
-    <#else> </#if>
+   </#if>
    <#list pojo.fieldsSimple as fieldSimple>
    <#if fieldSimple.type.simpleName == "String">
     public ${fieldSimple.name}: string;
@@ -30,8 +30,8 @@ export class ${pojo.name}Vo {
   </#list>
     <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
         <#if pojo.id.name != fieldSimpleNumberOrDate.name>
-    public ${fieldSimpleNumberOrDate.name}Max: string ;
-    public ${fieldSimpleNumberOrDate.name}Min: string ;
+            public ${fieldSimpleNumberOrDate.name}Max: string ;
+            public ${fieldSimpleNumberOrDate.name}Min: string ;
         </#if>
     </#list>
     <#list pojo.fieldsGeneric as fieldGeneric>

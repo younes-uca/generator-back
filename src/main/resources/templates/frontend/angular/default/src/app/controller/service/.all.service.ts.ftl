@@ -28,6 +28,7 @@ export class ${pojo.name}Service {
      private _edit${pojo.name}Dialog: boolean;
      private _view${pojo.name}Dialog: boolean;
      public edit${pojo.name}$ = new BehaviorSubject<boolean>(false);
+    private _search${pojo.name}:${pojo.name}Vo = new ${pojo.name}Vo();
 
 
     // getters and setters
@@ -71,7 +72,12 @@ export class ${pojo.name}Service {
     set view${pojo.name}Dialog(value: boolean) {
         this._view${pojo.name}Dialog = value;
        }
-
+     get search${pojo.name}(): ${pojo.name}Vo {
+        return this._search${pojo.name};
+       }
+    set search${pojo.name}(value: ${pojo.name}Vo) {
+        this._search${pojo.name} = value;
+       }
 
     // methods 
 
@@ -95,7 +101,17 @@ export class ${pojo.name}Service {
     public edit(): Observable<${pojo.name}Vo> {
         return this.http.put<${pojo.name}Vo>(this.API, this.selected${pojo.name});
     }
+    
 
+     public findByCriteria(${pojo.name?uncap_first}:${pojo.name}Vo):Observable<Array<${pojo.name}Vo>>{
+         <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
+        <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
+           ${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}Max = moment(${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}).format("YYYY-MM-DD");
+           ${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}Min = moment(${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}).format("YYYY-MM-DD");
+        </#if>
+       </#list>
+           return this.http.post<Array<${pojo.name}Vo>>(this.API+"/search",${pojo.name?uncap_first});
+    }
 
 
 

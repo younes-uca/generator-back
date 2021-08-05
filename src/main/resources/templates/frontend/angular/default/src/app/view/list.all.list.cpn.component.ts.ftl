@@ -6,7 +6,7 @@ import {${pojo.name}Vo} from '../../../controller/model/${pojo.name}.model';
 import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}.model';
     </#if>
 </#list>
-
+import { MessageService,ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-${pojo.name?uncap_first}-list',
@@ -16,17 +16,24 @@ import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}
 
 export class ${pojo.name}ListComponent implements OnInit {
     // declarations
-    
+    findByCriteriaShow:boolean=false;
      cols: any[] = [];
 
-    constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service) { }
+    constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,private messageService: MessageService,private confirmationService: ConfirmationService) { }
 
     ngOnInit(): void {
-     this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?cap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?cap_first}s,error=>console.log(error));
+     this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error));
     } 
     
     // methods 
   
+ public searchRequest(){
+        this.${pojo.name?uncap_first}Service.findByCriteria(this.search${pojo.name}).subscribe(${pojo.name?uncap_first}s=>{
+            
+            this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s;
+            this.search${pojo.name} = new ${pojo.name}Vo();
+        },error=>console.log(error));
+    }
 
     private initCol() {
         this.cols = [
@@ -55,12 +62,27 @@ export class ${pojo.name}ListComponent implements OnInit {
     }
 
     public delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-        this.${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first}).subscribe(status=>{
-          if(status > 0){
-           const position = this.${pojo.name?uncap_first}s.indexOf(${pojo.name?uncap_first});
-           position > -1 ? this.${pojo.name?uncap_first}s.splice(position, 1) : false;
-          }
-        },error=>console.log(error))
+                 this.confirmationService.confirm({
+                      message: 'Are you sure you want to delete the ${pojo.name} ?',
+                      header: 'Confirm',
+                      icon: 'pi pi-exclamation-triangle',
+                      accept: () => {
+                          this.${pojo.name?uncap_first}Service.delete(${pojo.name?uncap_first}).subscribe(status=>{
+                          if(status > 0){
+                          const position = this.${pojo.name?uncap_first}s.indexOf(${pojo.name?uncap_first});
+                          position > -1 ? this.${pojo.name?uncap_first}s.splice(position, 1) : false;
+                                     }
+                       this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: '${pojo.name} Deleted',
+                        life: 3000
+                    });
+                                        },error=>console.log(error))
+                             }
+                                                 });
+
+     
     }
 
 
@@ -110,7 +132,12 @@ export class ${pojo.name}ListComponent implements OnInit {
         this.${pojo.name?uncap_first}Service.view${pojo.name}Dialog = value;
        }
        
-
+     get search${pojo.name}(): ${pojo.name}Vo {
+        return this.${pojo.name?uncap_first}Service.search${pojo.name};
+       }
+    set search${pojo.name}(value: ${pojo.name}Vo) {
+        this.${pojo.name?uncap_first}Service.search${pojo.name} = value;
+       }
 
 
 

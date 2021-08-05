@@ -4,6 +4,7 @@ public class MenuRole {
 	private long id;
 	private Menu menu;
 	private RoleConfig role;
+
 	private String ordre;
 
 
@@ -19,15 +20,19 @@ public class MenuRole {
 	public void setOrdre(String ordre) {
 		this.ordre = ordre;
 	}
+
 	public Menu getMenu() {
 		return menu;
 	}
+
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
+
 	public RoleConfig getRole() {
 		return role;
 	}
+
 	public void setRole(RoleConfig role) {
 		this.role = role;
 	}
