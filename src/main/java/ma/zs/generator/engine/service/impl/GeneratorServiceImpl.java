@@ -49,6 +49,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             return null;
         for (Pojo pojo : userConfig.getPojos()) {
             System.out.println("pojo = " + pojo);
+
         }
         userConfig.setPojos(pojoService.validatePojos(userConfig.getPojos()));
         if (userConfig.getPojos().size() == 0)
@@ -90,7 +91,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 String generatedBackendFolder = generatedProjectFolder + File.separator + "frontend";
                 try {
                     templateEngine.generate(templateFolder, generatedBackendFolder, userConfig.getPojos(),
-                            userConfig.getConfig());
+                            userConfig.getConfig(),userConfig.getRoles());
                     history.save(template);
                 } catch (TemplateException e) {
                     System.out.println("error in frontend template " + template.getName() + " of "
@@ -110,7 +111,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 String generatedBackendFolder = generatedProjectFolder + File.separator + "backend";
                 try {
                     templateEngine.generate(templateFolder, generatedBackendFolder, userConfig.getPojos(),
-                            userConfig.getConfig());
+                            userConfig.getConfig(),userConfig.getRoles());
                     history.save(template);
                 } catch (TemplateException e) {
                     System.out.println("error in backend template " + template.getName() + " of "

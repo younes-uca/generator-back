@@ -30,6 +30,11 @@ public class EngineUtil {
             return true;
         else return false;
     }
+    public static boolean isPermissionRole(String fileName) {
+        if (fileName.contains("permission."))
+            return true;
+        else return false;
+    }
 
     public static String getSuffixOrName(String fileName) {
         return (fileName.split("\\."))[0];

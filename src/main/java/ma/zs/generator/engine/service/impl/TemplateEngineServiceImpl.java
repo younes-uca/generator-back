@@ -1,7 +1,9 @@
 package ma.zs.generator.engine.service.impl;
 
 import freemarker.template.TemplateException;
+import ma.zs.generator.engine.bean.Permission;
 import ma.zs.generator.engine.bean.Pojo;
+import ma.zs.generator.engine.bean.RoleConfig;
 import ma.zs.generator.engine.service.facade.FreeMarkerService;
 import ma.zs.generator.engine.service.facade.TemplateEngineService;
 import ma.zs.generator.engine.service.util.EngineUtil;
@@ -15,8 +17,10 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Qada
@@ -28,32 +32,45 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
     private FreeMarkerService freeMarkerService;
 
     @Override
-    public void generate(File templateFolder, String generatedFolder, List<Pojo> pojos, ProjectConfig config)
+    public void generate(File templateFolder, String generatedFolder, List<Pojo> pojos, ProjectConfig config, List<RoleConfig> roleConfigs)
             throws IOException, TemplateException {
         FileUtil.createDirectory(generatedFolder);
-        scanTemplate(templateFolder, templateFolder.getPath(), pojos, generatedFolder, config);
+        scanTemplate(templateFolder, templateFolder.getPath(), pojos, generatedFolder, config, roleConfigs);
     }
 
     @Override
-    public void scanTemplate(File template, String projectTemplatePath, List<Pojo> pojos, String outputFolder, ProjectConfig config)
+    public void scanTemplate(File template, String projectTemplatePath, List<Pojo> pojos, String outputFolder, ProjectConfig config, List<RoleConfig> roleConfigs)
             throws IOException, TemplateException {
 
         List<File> childs = Arrays.asList(template.listFiles());
         for (File file : childs) {
             if (file.isDirectory()) {
-                FileUtil.createDirectory(replaceAllPlaceHoldersInPath(file.getPath(), config).replace(projectTemplatePath, outputFolder));
-                scanTemplate(file, projectTemplatePath, pojos, outputFolder, config);
-            } else {
-                if (!EngineUtil.isTemplate(file.getName()))
-                    copyFile(file, projectTemplatePath, outputFolder, config);
-                else {
-                    if (EngineUtil.isTemplateForMany(file.getName()))
-                        generateForAllPojos(file, pojos, projectTemplatePath, outputFolder, config);
-                    else if (EngineUtil.isOptional(file.getName()))
-                        generateOptional(file, pojos, projectTemplatePath, outputFolder, config);
-                    else
-                        generateOne(file, pojos, projectTemplatePath, outputFolder, config);
 
+
+                // System.out.println("paaaath roooooooole name *******************"+file.getName());
+
+                FileUtil.createDirectory(replaceAllPlaceHoldersInPath(file.getPath(), config).replace(projectTemplatePath, outputFolder));
+                scanTemplate(file, projectTemplatePath, pojos, outputFolder, config, roleConfigs);
+
+
+            } else {
+                if (EngineUtil.isPermissionRole(file.getName()))     {
+                    for (RoleConfig roleConfig : roleConfigs) {
+                        generateForAllPermission(file, roleConfig.getPermissions(), projectTemplatePath, outputFolder, config,roleConfig.getName());
+                    }
+                } else {
+                    if (!EngineUtil.isTemplate(file.getName()))
+                        copyFile(file, projectTemplatePath, outputFolder, config);
+                    else {
+                        if (EngineUtil.isTemplateForMany(file.getName())) {
+                            generateForAllPojos(file, pojos, projectTemplatePath, outputFolder, config);
+
+                        } else if (EngineUtil.isOptional(file.getName()))
+                            generateOptional(file, pojos, projectTemplatePath, outputFolder, config);
+                        else
+                            generateOne(file, pojos, projectTemplatePath, outputFolder, config);
+
+                    }
                 }
             }
 
@@ -70,6 +87,9 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
 
     }
 
+    //file = template src\main\resources\templates\backend\spring\default\src\main\java\{domain}\{groupId}\{projectName}\{ws}\{rest}\{provided}\roles
+    //  src************ src\main\resources\templates\backend\spring\default
+    // des outputFoldel C:\Users\a\generated\1627578176949\backend
     private void generateForAllPojos(File file, List<Pojo> pojos, String src, String dest, ProjectConfig config)
             throws IOException, TemplateException {
         System.out.println("generate all " + file.getName());
@@ -78,7 +98,12 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
             suffix = replacePlaceholderWithTheEquivalentValue(EngineUtil.getPlaceHolder(suffix), config);
         String extensions = EngineUtil.getExtension(file.getName());
         String outputDirectory = replaceAllPlaceHoldersInPath(file.getParent().replace(src, dest), config);
+        System.out.println("out derectory " + dest);
+        System.out.println("out derectory " + src);
+
         if (!EngineUtil.isComponent(file.getName())) {
+            System.out.println("file name = " + file.getName() + "extention  " + suffix + " " + extensions);
+//file parent = src\main\resources\templates\backend\spring\default\src\main\java\{domain}\{groupId}\{projectName}\{ws}\{rest}\{provided}\roles
             for (Pojo pojo : pojos) {
                 freeMarkerService.generateFileWithOnePojo(pojo, file.getName(), file.getParent() + File.separator, pojo.getName() + suffix + "." + extensions, outputDirectory, config);
             }
@@ -89,6 +114,21 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
             }
 
         }
+
+    }
+
+    private void generateForAllPermission(File file, List<Permission> permissions, String src, String dest, ProjectConfig config, String roleName)
+            throws IOException, TemplateException {
+        System.out.println("generate all " + file.getName());
+
+        String outputDirectory = replaceAllPlaceHoldersInPath(file.getParent().replace(src, dest), config);
+        generateFilesInFoldersRoles(permissions, file.getName(), outputDirectory,
+                file.getParent() + File.separator, config,roleName);
+//        for (Permission p : permissions) {
+//            generateFilesInFoldersRoles(p, file.getName(), outputDirectory+File.separator+roleName,
+//                    file.getParent() + File.separator, config);
+//            // freeMarkerService.generateFileWithOnePermission(permissions, file.getName(), file.getParent() + File.separator, p.getName() + "Rest.java", outputDirectory, config);
+//        }
 
     }
 
@@ -147,6 +187,31 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
 
 
     }
+
+    private void generateFilesInFoldersRoles(List<Permission> permissions, String templateName, String outputDirectory, String templatePath
+            , ProjectConfig config,String roleName) throws IOException, TemplateException {
+
+        outputDirectory=outputDirectory+File.separator+roleName;
+        FileUtil.createDirectory(outputDirectory);
+        List<String> pojoName = new ArrayList<>();
+
+        for (int i = 0; i<permissions.size(); i++){
+            if(!pojoName.contains(permissions.get(i).getPojo().getName())){
+                pojoName.add(permissions.get(i).getPojo().getName());
+            }
+            for(String nom:pojoName) {
+                List<Permission> p =  permissions.stream()
+                        .filter(permission -> permission.getPojo().getName().equals(nom))
+                        .collect(Collectors.toList());
+                freeMarkerService.generateFileWithPermissions(p,roleName ,templateName, templatePath, StringFormatterUtil.lowerCaseTheFirstLetter(nom) + "Rest.java", outputDirectory, config);
+
+            }
+
+        }
+
+
+    }
+
 
     private String replaceAllPlaceHoldersInPath(String path, ProjectConfig projectConfig) {
         if (!path.contains("{") || !path.contains("}"))

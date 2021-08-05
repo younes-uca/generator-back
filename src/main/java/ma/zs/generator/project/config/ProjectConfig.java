@@ -20,6 +20,7 @@ public class ProjectConfig {
     public String provided = "provided";
     public String restFacade = "facade";
     public String vo = "vo";
+    public String roles = "roles";
     public String converter = "converter";
     public boolean swagger = true;
     public boolean flyWayDb = true;

@@ -2,6 +2,7 @@ package ma.zs.generator.engine.service.facade;
 
 import freemarker.template.TemplateException;
 import ma.zs.generator.engine.bean.Pojo;
+import ma.zs.generator.engine.bean.RoleConfig;
 import ma.zs.generator.project.config.ProjectConfig;
 
 import java.io.File;
@@ -13,9 +14,9 @@ import java.util.List;
  */
 public interface TemplateEngineService {
 
-    void generate(File templateFolder, String generatedFolder, List<Pojo> pojos, ProjectConfig config) throws IOException, TemplateException;
+    void generate(File templateFolder, String generatedFolder, List<Pojo> pojos, ProjectConfig config, List<RoleConfig> roleConfigs) throws IOException, TemplateException;
 
-    void scanTemplate(File template, String projectTemplatePath, List<Pojo> pojos, String outputFolder, ProjectConfig config)
+    void scanTemplate(File template, String projectTemplatePath, List<Pojo> pojos, String outputFolder, ProjectConfig config, List<RoleConfig> roleConfigs)
             throws IOException, TemplateException;
 
 }

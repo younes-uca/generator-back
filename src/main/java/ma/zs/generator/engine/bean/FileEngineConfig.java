@@ -11,7 +11,9 @@ public class FileEngineConfig {
     private String template;
     private String extension;
     private boolean foreachEntities;
+    private boolean foreachRolesPermission;
     private List<Pojo> pojos;
+    private List<RoleConfig> roleConfigs;
 
 
     public FileEngineConfig() {
@@ -42,6 +44,13 @@ public class FileEngineConfig {
         this.extension = extension;
     }
 
+    public boolean isForeachRolesPermission() {
+        return foreachRolesPermission;
+    }
+
+    public void setForeachRolesPermission(boolean foreachRolesPermission) {
+        this.foreachRolesPermission = foreachRolesPermission;
+    }
 
     public boolean isForeachEntities() {
         return foreachEntities;
@@ -56,6 +65,14 @@ public class FileEngineConfig {
     }
 
     public void setPojos(List<Pojo> pojos) {
+        this.pojos = pojos;
+    }
+
+    public List<RoleConfig> getRoleConfigs() {
+        return roleConfigs;
+    }
+
+    public void setRoleConfigs(List<RoleConfig> roleConfigs) {
         this.pojos = pojos;
     }
 
