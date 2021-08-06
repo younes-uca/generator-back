@@ -102,4 +102,19 @@ public class FreeMarkerServiceImpl implements FreeMarkerService {
         javaSourceFileWriter.close();
 
     }
+    @Override
+    public void genereteFileAuthorities(List<RoleConfig> roleConfigs,  String templateName, String fileName, String extensions,
+                                        String outputDirectory, String templatePath, ProjectConfig config) throws IOException, TemplateException{
+        Configuration configuration = initConfiguration();
+        Map<String, Object> freemarkerDataModel = new HashMap<>();
+        configuration.setDirectoryForTemplateLoading(new File(templatePath));
+        Template template = configuration.getTemplate(templateName);
+        freemarkerDataModel.put("roles", roleConfigs);
+        freemarkerDataModel.put("config", config);
+        File javaSourceFile = new File(outputDirectory, fileName + "." + extensions);
+        Writer javaSourceFileWriter = new FileWriter(javaSourceFile);
+        template.process(freemarkerDataModel, javaSourceFileWriter);
+        javaSourceFileWriter.close();
+    }
+
 }

@@ -54,27 +54,45 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
 
 
             } else {
-                if (EngineUtil.isPermissionRole(file.getName()))     {
+                if (EngineUtil.isPermissionRole(file.getName())) {
                     for (RoleConfig roleConfig : roleConfigs) {
-                        generateForAllPermission(file, roleConfig.getPermissions(), projectTemplatePath, outputFolder, config,roleConfig.getName());
+                        generateForAllPermission(file, roleConfig.getPermissions(), projectTemplatePath, outputFolder, config, roleConfig.getName());
                     }
                 } else {
-                    if (!EngineUtil.isTemplate(file.getName()))
-                        copyFile(file, projectTemplatePath, outputFolder, config);
-                    else {
-                        if (EngineUtil.isTemplateForMany(file.getName())) {
-                            generateForAllPojos(file, pojos, projectTemplatePath, outputFolder, config);
+                    if (EngineUtil.isAuthorities(file.getName())) {
+                        generateAuthorities(file, roleConfigs, projectTemplatePath, outputFolder, config);
 
-                        } else if (EngineUtil.isOptional(file.getName()))
-                            generateOptional(file, pojos, projectTemplatePath, outputFolder, config);
-                        else
-                            generateOne(file, pojos, projectTemplatePath, outputFolder, config);
+                    } else {
+                        if (!EngineUtil.isTemplate(file.getName()))
+                            copyFile(file, projectTemplatePath, outputFolder, config);
+                        else {
+                            if (EngineUtil.isTemplateForMany(file.getName())) {
+                                generateForAllPojos(file, pojos, projectTemplatePath, outputFolder, config);
 
+                            } else if (EngineUtil.isOptional(file.getName()))
+                                generateOptional(file, pojos, projectTemplatePath, outputFolder, config);
+                            else
+                                generateOne(file, pojos, projectTemplatePath, outputFolder, config);
+
+                        }
                     }
                 }
             }
 
         }
+
+    }
+
+    private void generateAuthorities(File file, List<RoleConfig> roleConfigs, String projectTemplatePath, String outputFolder, ProjectConfig config)
+            throws IOException, TemplateException {
+        String fileName = EngineUtil.getSuffixOrName(file.getName());
+        String extension = EngineUtil.getExtension(file.getName());
+
+        String outputDirectory = replaceAllPlaceHoldersInPath(file.getParent().replace(projectTemplatePath, outputFolder), config);
+        freeMarkerService.genereteFileAuthorities(roleConfigs, file.getName(), fileName,extension,outputDirectory,
+                file.getParent() + File.separator,config);
+
+
 
     }
 
@@ -119,16 +137,26 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
 
     private void generateForAllPermission(File file, List<Permission> permissions, String src, String dest, ProjectConfig config, String roleName)
             throws IOException, TemplateException {
-        System.out.println("generate all " + file.getName());
 
         String outputDirectory = replaceAllPlaceHoldersInPath(file.getParent().replace(src, dest), config);
-        generateFilesInFoldersRoles(permissions, file.getName(), outputDirectory,
-                file.getParent() + File.separator, config,roleName);
-//        for (Permission p : permissions) {
-//            generateFilesInFoldersRoles(p, file.getName(), outputDirectory+File.separator+roleName,
-//                    file.getParent() + File.separator, config);
-//            // freeMarkerService.generateFileWithOnePermission(permissions, file.getName(), file.getParent() + File.separator, p.getName() + "Rest.java", outputDirectory, config);
-//        }
+        outputDirectory = outputDirectory + File.separator + roleName;
+        FileUtil.createDirectory(outputDirectory);
+        List<String> pojoName = new ArrayList<>();
+
+        for (int i = 0; i < permissions.size(); i++) {
+            if (!pojoName.contains(permissions.get(i).getPojo().getName())) {
+                pojoName.add(permissions.get(i).getPojo().getName());
+            }
+            for (String nom : pojoName) {
+                List<Permission> p = permissions.stream()
+                        .filter(permission -> permission.getPojo().getName().equals(nom))
+                        .collect(Collectors.toList());
+                freeMarkerService.generateFileWithPermissions(p, roleName, file.getName(), file.getParent() + File.separator, StringFormatterUtil.lowerCaseTheFirstLetter(nom) + "Rest.java", outputDirectory, config);
+
+            }
+
+        }
+
 
     }
 
@@ -145,8 +173,9 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
             String outputDirectory = replaceAllPlaceHoldersInPath(file.getParent().replace(src, dest), config);
             System.out.println(" generate " + fileName + "." + extension + " in " + outputDirectory);
 
-            freeMarkerService.generateFile(pojos, file.getName(), fileName, extension, outputDirectory,
+             freeMarkerService.generateFile(pojos, file.getName(), fileName, extension, outputDirectory,
                     file.getParent() + File.separator, config);
+
         }
 
     }
@@ -182,30 +211,6 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
                 freeMarkerService.generateFileWithOnePojo(pojo, templateName, templatePath, StringFormatterUtil.lowerCaseTheFirstLetter(pojo.getName()) + "." + extensions, outputDirectory, config);
             else
                 freeMarkerService.generateFileWithOnePojo(pojo, templateName, templatePath, suffix + "." + extensions, outputDirectory, config);
-
-        }
-
-
-    }
-
-    private void generateFilesInFoldersRoles(List<Permission> permissions, String templateName, String outputDirectory, String templatePath
-            , ProjectConfig config,String roleName) throws IOException, TemplateException {
-
-        outputDirectory=outputDirectory+File.separator+roleName;
-        FileUtil.createDirectory(outputDirectory);
-        List<String> pojoName = new ArrayList<>();
-
-        for (int i = 0; i<permissions.size(); i++){
-            if(!pojoName.contains(permissions.get(i).getPojo().getName())){
-                pojoName.add(permissions.get(i).getPojo().getName());
-            }
-            for(String nom:pojoName) {
-                List<Permission> p =  permissions.stream()
-                        .filter(permission -> permission.getPojo().getName().equals(nom))
-                        .collect(Collectors.toList());
-                freeMarkerService.generateFileWithPermissions(p,roleName ,templateName, templatePath, StringFormatterUtil.lowerCaseTheFirstLetter(nom) + "Rest.java", outputDirectory, config);
-
-            }
 
         }
 

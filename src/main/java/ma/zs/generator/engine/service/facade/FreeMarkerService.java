@@ -28,4 +28,6 @@ public interface FreeMarkerService {
     void generateFileWithPermissions(List<Permission> permissions, String roleName , String templateName, String templatePath, String generatedFileName,
                                        String outputDirectory, ProjectConfig config) throws IOException, TemplateException ;
 
+    void genereteFileAuthorities(List<RoleConfig> roleConfigs,  String templateName, String fileName, String extensions,
+                                 String outputDirectory, String templatePath, ProjectConfig config) throws IOException, TemplateException;
 }

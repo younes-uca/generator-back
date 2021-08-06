@@ -35,6 +35,11 @@ public class EngineUtil {
             return true;
         else return false;
     }
+    public static boolean isAuthorities(String fileName) {
+        if (fileName.contains("Authorities"))
+            return true;
+        else return false;
+    }
 
     public static String getSuffixOrName(String fileName) {
         return (fileName.split("\\."))[0];
@@ -48,7 +53,10 @@ public class EngineUtil {
             else
                 pattern = Pattern.compile("cpn.(.*?).ftl", Pattern.DOTALL);
 
-        } else
+        } else if (fileName.contains(".Authorities.")) {
+            pattern = Pattern.compile(getSuffixOrName(fileName) + ".(.*?).Authorities.ftl", Pattern.DOTALL);
+
+        }else
             pattern = Pattern.compile(getSuffixOrName(fileName) + ".(.*?).ftl", Pattern.DOTALL);
 
         Matcher matcher = pattern.matcher(fileName);

@@ -22,6 +22,20 @@ public class ProjectConfig {
     public String vo = "vo";
     public String roles = "roles";
     public String converter = "converter";
+    public String common = "common";
+    public String jwt = "jwt";
+    public String userService = "UserService";
+    public String securityParams = "SecurityParams";
+    public String security = "security";
+
+    public String getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(String security) {
+        this.security = security;
+    }
+
     public boolean swagger = true;
     public boolean flyWayDb = true;
     public String mainClass = ((projectName.charAt(0) + "").toUpperCase()) + projectName.substring(1) + "Application";
@@ -45,6 +59,22 @@ public class ProjectConfig {
 
     public String getGroupId() {
         return groupId;
+    }
+
+    public String getUserService() {
+        return userService;
+    }
+
+    public void setUserService(String userService) {
+        this.userService = userService;
+    }
+
+    public String getSecurityParams() {
+        return securityParams;
+    }
+
+    public void setSecurityParams(String securityParams) {
+        this.securityParams = securityParams;
     }
 
     public void setGroupId(String groupId) {
@@ -197,5 +227,19 @@ public class ProjectConfig {
         this.flyWayDb = flyWayDb;
     }
 
+    public String getCommon() {
+        return common;
+    }
 
+    public void setCommon(String common) {
+        this.common = common;
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
 }
