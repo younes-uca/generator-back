@@ -22,7 +22,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${c
 @Api("Manages ${permissions[0].pojo.name?uncap_first} services")
 @RestController
 @RequestMapping("${config.projectName}/${roleName}/${permissions[0].pojo.name?uncap_first}")
-public class  ${permissions[0].pojo.name?cap_first}Rest {
+public class  ${permissions[0].pojo.name?cap_first}Rest${roleName?cap_first} {
 
 @Autowired
 private  ${permissions[0].pojo.name?cap_first}Service  ${permissions[0].pojo.name?uncap_first}Service;
@@ -64,13 +64,13 @@ private  ${permissions[0].pojo.name?cap_first}Converter  ${permissions[0].pojo.n
         return  ${permissions[0].pojo.name?uncap_first}Converter.toVo( ${permissions[0].pojo.name?uncap_first}Service.findAll());
         }
     </#if>
-    <#if permission.name?contains("view") >
-        @ApiOperation("Finds a ${permissions[0].pojo.name?uncap_first} by ${permissions[0].pojo.id.name}")
-        @GetMapping("/${permissions[0].pojo.id.name}}/{${permissions[0].pojo.id.name}}")
-        public  ${permissions[0].pojo.name}Vo findBy${permissions[0].pojo.id.name}?cap_first}(@PathVariable ${permissions[0].pojo.id.type.simpleName} ${permissions[0].pojo.id.name}){
-        return ${permissions[0].pojo.name?uncap_first}Converter.toVo(${permissions[0].pojo.name?uncap_first}Service.findBy${permissions[0].pojo.id.name}?cap_first}(${permissions[0].pojo.id.name}));
-        }
-    </#if>
+<#--    <#if permission.name?contains("view") >-->
+<#--        @ApiOperation("Finds a ${permissions[0].pojo.name?uncap_first} by ${permissions[0].pojo.id.name}")-->
+<#--        @GetMapping("/${permissions[0].pojo.id.name}}/{${permissions[0].pojo.id.name}}")-->
+<#--        public  ${permissions[0].pojo.name}Vo findBy${permissions[0].pojo.id.name}?cap_first}(@PathVariable ${permissions[0].pojo.id.type.simpleName} ${permissions[0].pojo.id.name}){-->
+<#--        return ${permissions[0].pojo.name?uncap_first}Converter.toVo(${permissions[0].pojo.name?uncap_first}Service.findBy${permissions[0].pojo.id.name}?cap_first}(${permissions[0].pojo.id.name}));-->
+<#--        }-->
+<#--    </#if>-->
 
 
 </#list>

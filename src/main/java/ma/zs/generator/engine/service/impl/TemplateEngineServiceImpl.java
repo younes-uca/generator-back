@@ -151,7 +151,7 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
                 List<Permission> p = permissions.stream()
                         .filter(permission -> permission.getPojo().getName().equals(nom))
                         .collect(Collectors.toList());
-                freeMarkerService.generateFileWithPermissions(p, roleName, file.getName(), file.getParent() + File.separator, StringFormatterUtil.lowerCaseTheFirstLetter(nom) + "Rest.java", outputDirectory, config);
+                freeMarkerService.generateFileWithPermissions(p, roleName, file.getName(), file.getParent() + File.separator, StringFormatterUtil.upperCaseTheFirstLetter(nom) + "Rest"+StringFormatterUtil.upperCaseTheFirstLetter(roleName)+".java", outputDirectory, config);
 
             }
 
