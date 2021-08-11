@@ -6,5 +6,7 @@ public final class AuthoritiesConstants {
     public static final String ${role.name} = "ROLE_${role.name?upper_case}";
 
 </#list>
+    public static final String anonymous = "ROLE_ANONYMOUS";
+
 
 }

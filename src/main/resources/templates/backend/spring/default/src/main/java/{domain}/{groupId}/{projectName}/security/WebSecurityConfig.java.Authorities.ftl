@@ -12,12 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.jwt}.JWTAuthenticationFilter;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.jwt}.JWTAuthorizationFiler;
 import  ${config.domain}.${config.groupId}.${config.projectName}.${config.common}.AuthoritiesConstants;
+import  ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade}.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,16 +28,15 @@ prePostEnabled = true,
 securedEnabled = true,
 jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-@Resource(name = "userService")
-private UserDetailsService userDetailsService;
-
 
 @Autowired
-private BCryptPasswordEncoder bCryptPasswordEncoder;
+private UserService userService;
 
+@Autowired
+private PasswordEncoder bCryptPasswordEncoder;
 @Override
 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
 }
 
 
@@ -43,10 +44,10 @@ auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncode
 protected void configure(HttpSecurity http) throws Exception {
 http.csrf().disable();
 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-http.authorizeRequests().antMatchers("/login/**").permitAll();
+http.authorizeRequests().antMatchers("/login").permitAll();
 
 <#list roles as role>
-    http.authorizeRequests().antMatchers("/${config.projectName}/${role.name}/").hasAuthority(AuthoritiesConstants.${role.name});
+    http.authorizeRequests().antMatchers("/api/${role.name}/").hasAuthority(AuthoritiesConstants.${role.name});
 </#list>
 
 // http.authorizeRequests().anyRequest().authenticated();
@@ -63,7 +64,7 @@ http.addFilterBefore(new JWTAuthorizationFiler(), UsernamePasswordAuthentication
 }
 
 @Bean
-public BCryptPasswordEncoder encoder(){
+public PasswordEncoder encoder(){
 return new BCryptPasswordEncoder();
 }
 

@@ -34,16 +34,16 @@ return null;
 
 
 public static boolean isAuthenticated() {
-Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-return authentication != null &&
-getAuthorities(authentication).noneMatch(AuthoritiesConstants.ANONYMOUS::equals);
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication != null &&
+    getAuthorities(authentication).noneMatch(AuthoritiesConstants.anonymous::equals);
 }
 
 
 public static boolean isCurrentUserInRole(String authority) {
-Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-return authentication != null &&
-getAuthorities(authentication).anyMatch(authority::equals);
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication != null &&
+    getAuthorities(authentication).anyMatch(authority::equals);
 }
 
 private static Stream<String> getAuthorities(Authentication authentication) {

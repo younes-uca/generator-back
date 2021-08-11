@@ -21,7 +21,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${c
 
 @Api("Manages ${permissions[0].pojo.name?uncap_first} services")
 @RestController
-@RequestMapping("${config.projectName}/${roleName}/${permissions[0].pojo.name?uncap_first}")
+@RequestMapping("api/${roleName}/${permissions[0].pojo.name?uncap_first}")
 public class  ${permissions[0].pojo.name?cap_first}Rest${roleName?cap_first} {
 
 @Autowired

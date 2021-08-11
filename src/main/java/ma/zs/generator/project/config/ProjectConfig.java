@@ -1,6 +1,8 @@
 package ma.zs.generator.project.config;
 
 
+import java.util.UUID;
+
 /**
  * @author Qada
  */
@@ -241,5 +243,8 @@ public class ProjectConfig {
 
     public void setJwt(String jwt) {
         this.jwt = jwt;
+    }
+    public String getSecret(){
+        return UUID.randomUUID().toString();
     }
 }

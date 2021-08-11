@@ -1,10 +1,12 @@
 package ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade};
 
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
 List<User> findAll();
 
@@ -32,6 +34,7 @@ List<User> findAll();
 
 
     int  deleteByUsername(String username);
+    public UserDetails loadUserByUsername(String username)  ;
 
 
 
