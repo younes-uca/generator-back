@@ -2,7 +2,7 @@ package ${config.domain}.${config.groupId}.${config.projectName}.${config.common
 
 public interface SecurityParams {
     public static final String JWT_HEADER_NAME="Authorization";
-    public static final String SECRET="softcodeur@gmail.com";
+    public static final String SECRET="${config.getSecret()}";
     public static final long EXPIRATION=86400000;
     public static final String HEADER_PREFIX="Bearer ";
 }

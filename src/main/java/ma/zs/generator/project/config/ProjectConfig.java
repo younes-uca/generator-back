@@ -1,6 +1,8 @@
 package ma.zs.generator.project.config;
 
 
+import java.util.UUID;
+
 /**
  * @author Qada
  */
@@ -250,5 +252,9 @@ public class ProjectConfig {
                 ", groupId='" + groupId + '\'' +
                 ", domain='" + domain + '\'' +
                 '}';
+    }
+
+    public String getSecret(){
+        return UUID.randomUUID().toString();
     }
 }

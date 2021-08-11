@@ -1,3 +1,4 @@
+
 package ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade};
 
 import java.util.List;

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.mainClass};
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.common}.${config.securityParams};
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.restFacade}.${config.userService};
+import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User;
 
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -36,7 +37,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User myUser = new ObjectMapper().readValue(request.getInputStream(), ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User.class);
+            User myUser = new ObjectMapper().readValue(request.getInputStream(), User.class);
             System.out.println(myUser.getUsername());
             System.out.println(myUser.getPassword());
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(myUser.getUsername(),myUser.getPassword()));
@@ -49,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User user = (${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User)authResult.getPrincipal();
+        User user = (User) authResult.getPrincipal();
 
         ${config.userService} userService = ${config.mainClass}.getCtx().getBean(${config.userService}.class);
 

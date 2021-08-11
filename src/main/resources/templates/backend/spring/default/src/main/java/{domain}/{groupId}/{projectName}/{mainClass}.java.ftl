@@ -15,6 +15,6 @@ ctx=SpringApplication.run(${config.mainClass}.class, args);
 public static ConfigurableApplicationContext getCtx() {
 return ctx;
 }
--
+
 
 }
