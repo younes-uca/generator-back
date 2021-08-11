@@ -242,4 +242,13 @@ public class ProjectConfig {
     public void setJwt(String jwt) {
         this.jwt = jwt;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectConfig{" +
+                "projectName='" + projectName + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", domain='" + domain + '\'' +
+                '}';
+    }
 }
