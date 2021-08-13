@@ -12,7 +12,15 @@ public class RoleConfig {
     private List<MenuRole> menuRoles;
     
 
-    public Long getId() {
+    public List<MenuRole> getMenuRoles() {
+		return menuRoles;
+	}
+
+	public void setMenuRoles(List<MenuRole> menuRoles) {
+		this.menuRoles = menuRoles;
+	}
+
+	public Long getId() {
         return id;
     }
 

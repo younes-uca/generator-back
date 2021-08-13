@@ -127,6 +127,9 @@ import { ${pojo.name}ListComponent } from './view/${pojo.name?uncap_first}/list/
 import { ${pojo.name}ViewComponent } from './view/${pojo.name?uncap_first}/view/${pojo.name?uncap_first}-view.component';
 import { ${pojo.name}EditComponent } from './view/${pojo.name?uncap_first}/edit/${pojo.name?uncap_first}-edit.component';
 import { ${pojo.name}Component } from './view/${pojo.name?uncap_first}/${pojo.name?uncap_first}.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
 </#list>
 @NgModule({
   imports: [
@@ -231,6 +234,9 @@ import { ${pojo.name}Component } from './view/${pojo.name?uncap_first}/${pojo.na
     ${pojo.name}Component,
     </#list>
     AppComponent,
+    AccessDeniedComponent,
+    LoginComponent,
+    RegisterComponent,
     AppMainComponent,
     AppMenuComponent,
     AppMenuitemComponent,
