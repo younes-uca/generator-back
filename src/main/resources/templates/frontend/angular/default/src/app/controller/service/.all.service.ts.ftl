@@ -19,7 +19,7 @@ import {${type.simpleName}Vo} from '../model/${type.simpleName}.model';
   providedIn: 'root'
 })
 export class ${pojo.name}Service {
-     readonly API  = 'http://localhost:${config.backend.port?c}/${config.projectName}/${pojo.name?uncap_first}/';
+     readonly API  = 'http://localhost:${config.backend.port}/${config.projectName}/${pojo.name?uncap_first}/';
      constructor(private http: HttpClient) { }
      private _${pojo.name?uncap_first}s: Array<${pojo.name}Vo> = [];
      private _selected${pojo.name}: ${pojo.name}Vo = new ${pojo.name}Vo();

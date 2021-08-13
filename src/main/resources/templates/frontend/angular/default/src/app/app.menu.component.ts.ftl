@@ -8,7 +8,7 @@ import {
 } from "@angular/animations";
 import { AppComponent } from "./app.component";
 import { AppMainComponent } from "./app.main.component";
-
+import { AuthService } from "./controller/service/Auth.service";
 @Component({
   selector: "app-menu",
   templateUrl: "./app.menu.component.html",
@@ -53,25 +53,56 @@ import { AppMainComponent } from "./app.main.component";
 })
 export class AppMenuComponent implements OnInit {
   model: any[];
-
-  constructor(public app: AppComponent, public appMain: AppMainComponent) {}
+  <#list roles as role>
+  model${role.name?lower_case} : any[];
+  </#list>
+  constructor(public app: AppComponent, public appMain: AppMainComponent,private authService:AuthService) {}
 
   ngOnInit() {
-    this.model = [
-       {
-        label: "Favorites",
-        icon: "pi pi-fw pi-home",
-        items:[
-            <#list pojos as pojo>
-           {
-            label: "${pojo.name}",
-            icon: "pi pi-fw pi-home",
-            routerLink: ["/${pojo.name?uncap_first}/crud"],
-          },
-        </#list>
-             ]
-       }
+    //const variable =  Object.keys({myFirstName})[0];
+    <#list roles as role>
+    this.model${role.name?lower_case} = 
+      [
+           <#list role.menuRoles as menuRole>
+              {
+                label: "${menuRole.menu.libelle}",
+                icon: "${menuRole.menu.icone}",
+                items:[
+                  <#list menuRole.menu.menuItems as menuItem>
+                    {
+                      label: "${menuItem.libelle}",
+                      icon: "${menuItem.icone}",
+                      <#if menuItem.pojo??>
+                          items : [
+                        <#list menuItem.menuItems as subMenuItem>
+                         {
+                          label: "${subMenuItem.libelle}",
+                          icon: "${subMenuItem.icone}",
+                          routerLink:["${subMenuItem.libelle}/crud"]
+                         },
+                        </#list>
+                      ]
+                       </#if>
+                   
+                    },
+                  </#list>
+                ]
+              }
+           </#list>
     ]
+    </#list>
+       if(this.authService.authenticated){
+          if(this.authService.authenticatedUser.roles){
+           this.authService.authenticatedUser.roles.forEach(role=>{
+           const roleName = role.authority;
+           eval("this.model = this.model"+roleName);
+            })
+          }else{
+             this.model = this.modeldefault;
+          this.router.navigate(['/app/denied'])
+          }
+
+      }
   }
   onMenuClick(event) {
     this.appMain.onMenuClick(event);
