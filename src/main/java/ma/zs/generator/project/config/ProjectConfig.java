@@ -29,6 +29,12 @@ public class ProjectConfig {
     public String userService = "UserService";
     public String securityParams = "SecurityParams";
     public String security = "security";
+    public boolean swagger = true;
+    public boolean flyWayDb = true;
+    public String mainClass = ((projectName.charAt(0) + "").toUpperCase()) + projectName.substring(1) + "Application";
+    private BackendConfig backend;
+    private FrontendConfig frontend;
+
 
     public String getSecurity() {
         return security;
@@ -37,12 +43,6 @@ public class ProjectConfig {
     public void setSecurity(String security) {
         this.security = security;
     }
-
-    public boolean swagger = true;
-    public boolean flyWayDb = true;
-    public String mainClass = ((projectName.charAt(0) + "").toUpperCase()) + projectName.substring(1) + "Application";
-    private BackendConfig backend;
-    private FrontendConfig frontend;
 
     public ProjectConfig() {
         super();

@@ -7,7 +7,7 @@ public class BackendConfig {
     private Integer port = 8080;
     private String dataSourceUserName = "root";
     private String dataSourcePassword = "";
-    private String databaseName;
+    private String databaseName = "generated";
     private String dataSourceUrl;
 
     public int getPort() {
