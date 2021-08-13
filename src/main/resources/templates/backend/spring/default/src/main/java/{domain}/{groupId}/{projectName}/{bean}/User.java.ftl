@@ -40,7 +40,7 @@ private boolean accountNonLocked;
 private String username;
 private String password;
 private String firstName;
-private String lasName;
+private String lastName;
 private boolean passwordChanged;
 
 
@@ -53,140 +53,154 @@ private  Collection<Role> roles = new ArrayList<>();
     private Collection<Role> authorities;
 
         public User() {
-        super();
+            super();
         }
 
         public boolean getCredentialsNonExpired() {
-        return credentialsNonExpired;
+            return credentialsNonExpired;
         }
 
         public boolean getEnabled() {
-        return enabled;
+            return enabled;
         }
 
         public boolean getAccountNonExpired() {
-        return accountNonExpired;
+            return accountNonExpired;
         }
 
         public boolean getAccountNonLocked() {
-        return accountNonLocked;
+            return accountNonLocked;
         }
 
         public boolean getPasswordChanged() {
-        return passwordChanged;
+            return passwordChanged;
         }
 
 
         public Long getId() {
-        return id;
+            return id;
         }
 
         public void setId(Long id) {
-        this.id = id;
+            this.id = id;
         }
 
         public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
+            return credentialsNonExpired;
         }
 
         public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
+            this.credentialsNonExpired = credentialsNonExpired;
         }
 
 
 
         public Collection<Role> getRoles() {
             return roles;
-            }
+        }
 
-            public void setRoles(Collection<Role> roles) {
-                this.roles = roles;
-                }
+        public void setRoles(Collection<Role> roles) {
+            this.roles = roles;
+        }
 
-                public boolean isEnabled() {
-                return enabled;
-                }
+        public boolean isEnabled() {
+            return enabled;
+        }
 
-                public void setEnabled(boolean enabled) {
-                this.enabled = enabled;
-                }
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
 
-                public Date getCreatedAt() {
-                return createdAt;
-                }
+        public Date getCreatedAt() {
+            return createdAt;
+        }
 
-                public void setCreatedAt(Date createdAt) {
-                this.createdAt = createdAt;
-                }
+        public void setCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+        }
 
-                public Date getUpdatedAt() {
-                return updatedAt;
-                }
+        public Date getUpdatedAt() {
+            return updatedAt;
+        }
 
-                public void setUpdatedAt(Date updatedAt) {
-                this.updatedAt = updatedAt;
-                }
+        public void setUpdatedAt(Date updatedAt) {
+            this.updatedAt = updatedAt;
+        }
 
-                public String getEmail() {
-                return email;
-                }
+        public String getEmail() {
+            return email;
+        }
 
-                public void setEmail(String email) {
-                this.email = email;
-                }
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-                public boolean isAccountNonExpired() {
-                return accountNonExpired;
-                }
+        public boolean isAccountNonExpired() {
+            return accountNonExpired;
+        }
 
-                public void setAccountNonExpired(boolean accountNonExpired) {
-                this.accountNonExpired = accountNonExpired;
-                }
+        public void setAccountNonExpired(boolean accountNonExpired) {
+            this.accountNonExpired = accountNonExpired;
+        }
 
-                public boolean isAccountNonLocked() {
-                return accountNonLocked;
-                }
+        public boolean isAccountNonLocked() {
+            return accountNonLocked;
+        }
 
-                public void setAccountNonLocked(boolean accountNonLocked) {
-                this.accountNonLocked = accountNonLocked;
-                }
+        public void setAccountNonLocked(boolean accountNonLocked) {
+            this.accountNonLocked = accountNonLocked;
+        }
 
-                public String getUsername() {
-                return username;
-                }
+        public String getUsername() {
+            return username;
+        }
 
-                public void setUsername(String username) {
-                this.username = username;
-                }
-
-
-                public Collection<Role> getAuthorities() {
-                    if(this.authorities == null)
-                    this.authorities =  this.roles;
-
-                    return authorities;
-                    }
-
-                    public void setAuthorities(Collection<Role> authorities) {
-                        this.authorities = authorities;
-                        }
-
-                        public String getPassword() {
-                        return password;
-                        }
-
-                        public void setPassword(String password) {
-                        this.password = password;
-                        }
-
-                        public boolean isPasswordChanged() {
-                        return passwordChanged;
-                        }
-
-                        public void setPasswordChanged(boolean passwordChanged) {
-                        this.passwordChanged = passwordChanged;
-                        }
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
 
+        public Collection<Role> getAuthorities() {
+            if(this.authorities == null)
+            this.authorities =  this.roles;
 
-                        }
+            return authorities;
+         }
+
+        public void setAuthorities(Collection<Role> authorities) {
+            this.authorities = authorities;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public boolean isPasswordChanged() {
+            return passwordChanged;
+        }
+
+        public void setPasswordChanged(boolean passwordChanged) {
+            this.passwordChanged = passwordChanged;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lasName;
+        }
+
+        public void setLastName(String lasName) {
+            this.lasName = lasName;
+        }
+
+}
