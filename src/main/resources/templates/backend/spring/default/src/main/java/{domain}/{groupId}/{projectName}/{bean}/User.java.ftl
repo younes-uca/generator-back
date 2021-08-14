@@ -21,33 +21,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-
 public class User  implements UserDetails {
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
-private boolean credentialsNonExpired;
-private boolean enabled;
-@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
-@Temporal(TemporalType.TIMESTAMP)
-private Date createdAt;
-@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
-@Temporal(TemporalType.TIMESTAMP)
-private Date updatedAt;
-private String email;
-private boolean accountNonExpired;
-private boolean accountNonLocked;
-private String username;
-private String password;
-private String firstName;
-private String lastName;
-private boolean passwordChanged;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+    private String email;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private boolean passwordChanged;
 
-
-@ManyToMany(fetch = FetchType.EAGER)
-@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-@JoinColumn(name = "ROLE_ID") })
-private  Collection<Role> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+    @JoinColumn(name = "ROLE_ID") })
+    private  Collection<Role> roles = new ArrayList<>();
 
     @Transient
     private Collection<Role> authorities;
