@@ -130,6 +130,9 @@ import { ${pojo.name}Component } from './view/${pojo.name?uncap_first}/${pojo.na
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { UserListComponent } from './view/user-list/user-list.component';
+import { UserService } from './controller/service/user.service';
+import { RoleService } from './controller/service/role.service';
 </#list>
 @NgModule({
   imports: [
@@ -237,6 +240,7 @@ import { AccessDeniedComponent } from './auth/access-denied/access-denied.compon
     AccessDeniedComponent,
     LoginComponent,
     RegisterComponent,
+    
     AppMainComponent,
     AppMenuComponent,
     AppMenuitemComponent,
@@ -259,17 +263,21 @@ import { AccessDeniedComponent } from './auth/access-denied/access-denied.compon
     AppErrorComponent,
     AppAccessdeniedComponent,
     AppLoginComponent,
+    UserListComponent
   ],
   providers: [
     /*    { provide: LocationStrategy, useClass: HashLocationStrategy }, */
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     CountryService,
     CustomerService,
     EventService,
+    UserService,
     IconService,
     NodeService,
     PhotoService,
     ProductService,
     MenuService,
+    RoleService,
     MessageService,
     ConfirmationService,
   ],

@@ -9,6 +9,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './controller/guards/auth.guard';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { UserListComponent } from './view/user-list/user-list.component';
 @NgModule({
   imports: [
     RouterModule.forRoot(
@@ -23,7 +24,8 @@ import { AccessDeniedComponent } from './auth/access-denied/access-denied.compon
             <#list pojos as pojo>
              { path: '${pojo.name?uncap_first}', children: [{path: 'crud', component: ${pojo.name}Component,canActivate:[AuthGuard]}]},
             </#list>
-             {path:'denied',component:AccessDeniedComponent}
+             {path:'denied',component:AccessDeniedComponent},
+             { path: 'user', children: [{path: 'crud', component: UserListComponent}]},
           ],
           canActivate:[AuthGuard]
         },
