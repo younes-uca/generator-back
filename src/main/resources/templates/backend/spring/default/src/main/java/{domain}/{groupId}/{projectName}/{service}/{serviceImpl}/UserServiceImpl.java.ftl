@@ -108,11 +108,18 @@ public class UserServiceImpl implements UserService {
         else {
             foundedUser.setEmail(user.getEmail());
             foundedUser.setUsername(user.getUsername());
+            foundedUser.setFirstName(user.getFirstName());
+            foundedUser.setLastName(user.getLastName());
             foundedUser.setEnabled(user.isEnabled());
             foundedUser.setCredentialsNonExpired(user.isCredentialsNonExpired());
             foundedUser.setAccountNonLocked(user.isAccountNonLocked());
             foundedUser.setAccountNonExpired(user.isAccountNonExpired());
             foundedUser.setAuthorities(new ArrayList<>());
+            Collection<Role> roles = new ArrayList<Role>();
+            for (Role role : user.getRoles()) {
+            	roles.add(roleService.save(role));
+            }
+            user.setRoles(roles);
             return userDao.save(foundedUser);
         }
     }

@@ -1,4 +1,3 @@
-
 package  ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${config.rest}.${config.provided}.${config.restFacade};
 
 import java.util.List;
