@@ -8,34 +8,24 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.U
 
 public interface UserService extends UserDetailsService {
 
-List<User> findAll();
-
+    List<User> findAll();
 
     User findByUsername(String username);
 
-
     User findById(Long id);
-
 
     void deleteById(Long id);
 
-
-
     User save(User user);
-
 
     User update(User user);
 
-
     int delete(User user);
-
 
     User findByUsernameWithRoles(String username);
 
-
     int  deleteByUsername(String username);
+
     public UserDetails loadUserByUsername(String username)  ;
 
-
-
-    }
+}

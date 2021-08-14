@@ -9,8 +9,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.R
 
 @Repository
 public interface RoleDao extends JpaRepository<Role,Long> {
-
-Role findByAuthority(String authority);
-int deleteByAuthority(String authority);
-List<Role> findAllByUsersUsername(String username);
-    }
+    Role findByAuthority(String authority);
+    int deleteByAuthority(String authority);
+    List<Role> findAllByUsersUsername(String username);
+}

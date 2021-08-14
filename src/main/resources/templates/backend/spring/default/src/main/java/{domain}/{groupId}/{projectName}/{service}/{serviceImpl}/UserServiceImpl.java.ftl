@@ -24,91 +24,88 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.service
 @Service
 public class UserServiceImpl implements UserService {
 
-@Autowired
-private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
-@Autowired
-private RoleService roleService;
+    @Autowired
+    private RoleService roleService;
 
-@Autowired
-PasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    PasswordEncoder bCryptPasswordEncoder;
 
-@Override
-public List<User> findAll() {
-    return userDao.findAll();
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 
     @Override
     public User findByUsername(String username) {
-    if (username == null)
-    return null;
-    return userDao.findByUsername(username);
+        if (username == null)
+        return null;
+        return userDao.findByUsername(username);
     }
 
     @Override
     public User findByUsernameWithRoles(String username) {
-    if (username == null)
-    return null;
-    return userDao.findByUsername(username);
+        if (username == null)
+        return null;
+        return userDao.findByUsername(username);
     }
 
     @Override
     @Transactional
     public int deleteByUsername(String username) {
-    return userDao.deleteByUsername(username);
+        return userDao.deleteByUsername(username);
     }
 
     @Override
     public User findById(Long id) {
-    if (id == null)
-    return null;
-    return userDao.getOne(id);
+        if (id == null)
+        return null;
+        return userDao.getOne(id);
     }
 
     @Transactional
     public void deleteById(Long id) {
-    userDao.deleteById(id);
+        userDao.deleteById(id);
     }
 
     @Override
     public User save(User user) {
-    User foundedUserByUsername = findByUsername(user.getUsername());
-    User foundedUserByEmail = userDao.findByEmail(user.getEmail());
-    if (foundedUserByUsername != null || foundedUserByEmail != null)
-    return null;
-    else {
-    if (user.getPassword() == null || user.getPassword().isEmpty()) {
-    user.setPassword((user.getUsername()));
-    }
-    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-    user.setAccountNonExpired(true);
-    user.setAccountNonLocked(true);
-    user.setCredentialsNonExpired(true);
-    user.setEnabled(true);
-    user.setPasswordChanged(false);
-    user.setCreatedAt(new Date());
-
-    if (user.getRoles() != null) {
-    Collection<Role> roles = new ArrayList<Role>();
-            for (Role role : user.getRoles()) {
-            roles.add(roleService.save(role));
+        User foundedUserByUsername = findByUsername(user.getUsername());
+        User foundedUserByEmail = userDao.findByEmail(user.getEmail());
+        if (foundedUserByUsername != null || foundedUserByEmail != null) return null;
+        else {
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                user.setPassword((user.getUsername()));
             }
-            user.setRoles(roles);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
+            user.setAccountNonExpired(true);
+            user.setAccountNonLocked(true);
+            user.setCredentialsNonExpired(true);
+            user.setEnabled(true);
+            user.setPasswordChanged(false);
+            user.setCreatedAt(new Date());
+
+            if (user.getRoles() != null) {
+                Collection<Role> roles = new ArrayList<Role>();
+                for (Role role : user.getRoles()) {
+                    roles.add(roleService.save(role));
+                }
+                user.setRoles(roles);
             }
             User mySaved = userDao.save(user);
 
             return mySaved;
-            }
-            }
+        }
+    }
 
-            @Override
-            public User update(User user) {
-            User foundedUser = findById(user.getId());
-            if (foundedUser == null)
-            return null;
-            else {
+    @Override
+    public User update(User user) {
+        User foundedUser = findById(user.getId());
+        if (foundedUser == null) return null;
+        else {
             foundedUser.setEmail(user.getEmail());
             foundedUser.setUsername(user.getUsername());
             foundedUser.setEnabled(user.isEnabled());
@@ -117,27 +114,21 @@ public List<User> findAll() {
             foundedUser.setAccountNonExpired(user.isAccountNonExpired());
             foundedUser.setAuthorities(new ArrayList<>());
             return userDao.save(foundedUser);
-            }
+        }
+    }
 
-            }
+    @Override
+    @Transactional
+    public int delete(Long id) {
+        User foundedUser = findById(id);
+        if (foundedUser == null) return -1;
+        userDao.delete(foundedUser);
+        return 1;
+    }
 
-            @Override
-            @Transactional
-            public int delete(User user) {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByUsernameWithRoles(username);
+    }
 
-            if (user.getUsername() == null)
-            return -1;
-
-            User foundedUser = findByUsername(user.getUsername());
-            if (foundedUser == null)
-            return -1;
-            userDao.delete(foundedUser);
-            return 1;
-            }
-
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            return findByUsernameWithRoles(username);
-            }
-
-            }
+}

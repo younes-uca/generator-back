@@ -7,9 +7,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.U
 
 @Repository
 public interface UserDao  extends JpaRepository<User, Long>{
-User findByUsername(String username);
-int deleteByUsername(String username);
-
-User findByEmail(String email);
-
+    User findByUsername(String username);
+    int deleteByUsername(String username);
+    User findByEmail(String email);
 }
