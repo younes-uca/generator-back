@@ -53,13 +53,33 @@ import { AuthService } from "./controller/service/Auth.service";
 })
 export class AppMenuComponent implements OnInit {
   model: any[];
+  modelSuperAdmin:any[];
   <#list roles as role>
   model${role.name?lower_case} : any[];
   </#list>
   constructor(public app: AppComponent, public appMain: AppMainComponent,private authService:AuthService) {}
 
   ngOnInit() {
-    //const variable =  Object.keys({myFirstName})[0];
+    this.modelsuperadmin = [
+       {
+        label: "Favorites",
+        icon: "pi pi-fw pi-home",
+        items:[
+            <#list pojos as pojo>
+           {
+            label: "${pojo.name}",
+            icon: "pi pi-fw pi-home",
+            routerLink: ["/${pojo.name?uncap_first}/crud"],
+          },
+        </#list>
+           {
+                      label: "User",
+                      icon: "pi pi-user",
+                      routerLink:["user/crud"],
+                    },
+             ]
+       }
+    ]
     <#list roles as role>
     this.model${role.name?lower_case} = 
       [
@@ -95,7 +115,7 @@ export class AppMenuComponent implements OnInit {
           if(this.authService.authenticatedUser.roles){
            this.authService.authenticatedUser.roles.forEach(role=>{
            const roleName = role.authority;
-           eval("this.model = this.model"+roleName);
+           eval("this.model = this.model"+getRole(roleName));
             })
           }else{
              this.model = this.modeldefault;
@@ -104,6 +124,10 @@ export class AppMenuComponent implements OnInit {
 
       }
   }
+  getRole(text){
+  const [role, ...rest] = text.split('_');
+  return rest.join('').toLowerCase()
+}
   onMenuClick(event) {
     this.appMain.onMenuClick(event);
   }
