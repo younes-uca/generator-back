@@ -6,6 +6,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { JwtInterceptor } from './controller/interceptors/jwt.interceptor';
 
 import { AccordionModule } from "primeng/accordion";
 import { AutoCompleteModule } from "primeng/autocomplete";
@@ -127,13 +129,13 @@ import { ${pojo.name}ListComponent } from './view/${pojo.name?uncap_first}/list/
 import { ${pojo.name}ViewComponent } from './view/${pojo.name?uncap_first}/view/${pojo.name?uncap_first}-view.component';
 import { ${pojo.name}EditComponent } from './view/${pojo.name?uncap_first}/edit/${pojo.name?uncap_first}-edit.component';
 import { ${pojo.name}Component } from './view/${pojo.name?uncap_first}/${pojo.name?uncap_first}.component';
+</#list>
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
 import { UserListComponent } from './view/user-list/user-list.component';
 import { UserService } from './controller/service/user.service';
 import { RoleService } from './controller/service/role.service';
-</#list>
 @NgModule({
   imports: [
     BrowserModule,

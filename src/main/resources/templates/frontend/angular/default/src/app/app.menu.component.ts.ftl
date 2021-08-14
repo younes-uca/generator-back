@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import {
   trigger,
   state,
@@ -53,11 +54,15 @@ import { AuthService } from "./controller/service/Auth.service";
 })
 export class AppMenuComponent implements OnInit {
   model: any[];
-  modelSuperAdmin:any[];
+  modelsuperadmin:any[];
+  modeldefault : any[];
   <#list roles as role>
   model${role.name?lower_case} : any[];
   </#list>
-  constructor(public app: AppComponent, public appMain: AppMainComponent,private authService:AuthService) {}
+  constructor(public app: AppComponent,
+   public appMain: AppMainComponent,
+   private authService:AuthService,
+  private router: Router) {}
 
   ngOnInit() {
     this.modelsuperadmin = [
@@ -115,7 +120,7 @@ export class AppMenuComponent implements OnInit {
           if(this.authService.authenticatedUser.roles){
            this.authService.authenticatedUser.roles.forEach(role=>{
            const roleName = role.authority;
-           eval("this.model = this.model"+getRole(roleName));
+           eval("this.model = this.model"+ this.getRole(roleName));
             })
           }else{
              this.model = this.modeldefault;
