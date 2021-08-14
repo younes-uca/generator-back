@@ -20,7 +20,7 @@ public interface UserService extends UserDetailsService {
 
     User update(User user);
 
-    int delete(User user);
+    int delete(Long id);
 
     User findByUsernameWithRoles(String username);
 

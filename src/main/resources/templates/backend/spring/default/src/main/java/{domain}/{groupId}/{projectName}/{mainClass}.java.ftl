@@ -3,11 +3,15 @@ package  ${config.domain}.${config.groupId}.${config.projectName};
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import java.util.Arrays;
 
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.common}.AuthoritiesConstants;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.User;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.Role;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade}.UserService;
+import ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade}.RoleService;
 
 
 @SpringBootApplication

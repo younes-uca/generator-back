@@ -13,7 +13,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.service
 @RequestMapping("/api/roles")
 @RestController
 // @PreAuthorize("hasRole(AuthoritiesConstants.super_admin)")
-public class UserRest {
+public class RoleRest {
     @Autowired
     private RoleService roleService;
 
