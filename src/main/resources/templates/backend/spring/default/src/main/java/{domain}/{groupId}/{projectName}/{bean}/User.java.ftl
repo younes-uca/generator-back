@@ -194,11 +194,11 @@ public class User  implements UserDetails {
         }
 
         public String getLastName() {
-            return lasName;
+            return lastName;
         }
 
-        public void setLastName(String lasName) {
-            this.lasName = lasName;
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
         }
 
 }
