@@ -6,11 +6,11 @@ import { Role } from '../model/Role.model';
   providedIn: 'root'
 })
 export class RoleService {
-  private readonly API = "http://localhost:8036"
+  private readonly API = "http://localhost:8036/api"
   _roles:Role[] = [];
   constructor(private http:HttpClient) { }
   findAll(){
-    this.http.get<Role[]>(this.API+"role/").subscribe(roles=>{
+    this.http.get<Role[]>(this.API+"/roles").subscribe(roles=>{
       this._roles = roles;
     },(error:HttpErrorResponse)=>{
       console.log(error.error)
