@@ -43,7 +43,7 @@ public class User  implements UserDetails {
     private boolean passwordChanged;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+    @JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
     @JoinColumn(name = "ROLE_ID") })
     private  Collection<Role> roles = new ArrayList<>();
 

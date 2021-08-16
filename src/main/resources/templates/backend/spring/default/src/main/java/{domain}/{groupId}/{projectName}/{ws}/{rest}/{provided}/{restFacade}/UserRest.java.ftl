@@ -19,12 +19,12 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.service
 
 @RequestMapping("/api/users")
 @RestController
-// @PreAuthorize("hasRole(AuthoritiesConstants.super_admin)")
+// @PreAuthorize("hasRole(ROLE_SUPER_ADMIN)")
 public class UserRest {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole(AuthoritiesConstants.super_admin)")
+    @PreAuthorize("hasRole(ROLE_SUPER_ADMIN)")
     @GetMapping("/")
     public List<User> findAll(){
         return this.userService.findAll();

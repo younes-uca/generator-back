@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
             for (Role role : user.getRoles()) {
             	roles.add(roleService.save(role));
             }
-            user.setRoles(roles);
+            foundedUser.setRoles(roles);
             return userDao.save(foundedUser);
         }
     }

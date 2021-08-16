@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Role implements GrantedAuthority {
     @Id
@@ -31,8 +25,13 @@ public class Role implements GrantedAuthority {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @ManyToMany()
+    @JoinTable(name = "roles_permissions", joinColumns = { @JoinColumn(name = "ROLE_ID") }, inverseJoinColumns = {
+         @JoinColumn(name = "PERMISSION_ID") })
+    private List<Permission> permissions = new ArrayList<>();
+
     @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList();
+    private List<User> users = new ArrayList<>();
 
     public Role(){
         super();
@@ -61,5 +60,20 @@ public class Role implements GrantedAuthority {
     }
     public void setUpdatedAt(Date updatedAt){
         this.updatedAt = updatedAt;
+    }
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

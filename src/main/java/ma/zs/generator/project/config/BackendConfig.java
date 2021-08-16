@@ -4,7 +4,7 @@ package ma.zs.generator.project.config;
  * @author Qada
  */
 public class BackendConfig {
-    private Integer port = 8080;
+    private Integer port = 8036;
     private String dataSourceUserName = "root";
     private String dataSourcePassword = "";
     private String databaseName = "generated";

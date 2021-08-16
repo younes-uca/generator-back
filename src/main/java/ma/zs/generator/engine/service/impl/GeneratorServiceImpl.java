@@ -71,7 +71,6 @@ public class GeneratorServiceImpl implements GeneratorService {
             }
 
         } catch (IOException e) {
-            System.out.println("errora fi dakchi dfiles");
             e.printStackTrace();
             return null;
         }

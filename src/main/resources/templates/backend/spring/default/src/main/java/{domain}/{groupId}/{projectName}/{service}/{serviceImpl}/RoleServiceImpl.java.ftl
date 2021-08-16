@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import  ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.Role;
+import  ${config.domain}.${config.groupId}.${config.projectName}.${config.bean}.Permission;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.dao}.RoleDao;
+import ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade}.PermissionService;
 import ${config.domain}.${config.groupId}.${config.projectName}.${config.service}.${config.serviceFacade}.RoleService;
 
 
@@ -18,6 +20,9 @@ public class RoleServiceImpl  implements RoleService {
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @Override
     public List<Role> findAll() {
@@ -77,6 +82,11 @@ public class RoleServiceImpl  implements RoleService {
     public Role save(Role role) {
         Role r =  findByAuthority(role.getAuthority());
         if(r != null) return r;
+        List<Permission> perms = new ArrayList<>();
+        role.getPermissions().forEach(perm -> {
+            perms.add(permissionService.save(perm));
+        });
+        role.setPermissions(perms);
         return roleDao.save(role);
     }
 
