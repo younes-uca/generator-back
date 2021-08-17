@@ -44,25 +44,51 @@ export class ${pojo.name}ListComponent implements OnInit {
     }
     
     public edit${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
+        const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "edit");
+         if(isPermistted){
          this.selected${pojo.name} = ${pojo.name?uncap_first};
          this.edit${pojo.name}Dialog = true;
          this.${pojo.name?uncap_first}Service.edit${pojo.name}$.next(true);
+         }else{
+            this.messageService.add({
+                severity: 'error', summary: "", detail: "you don't have enough permissions"
+            });
+         }
+       
     }
     
 
 
     public view${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-         this.selected${pojo.name} = ${pojo.name?uncap_first};
+        const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "view");
+        if(isPermistted){
+       this.selected${pojo.name} = ${pojo.name?uncap_first};
         this.view${pojo.name}Dialog = true;
+        }else{
+             this.messageService.add({
+                severity: 'error', summary: "", detail: "you don't have enough permissions"
+            });
+        }
+        
     }
     
-    public openCreate${pojo.name}() {
-        this.selected${pojo.name} = new ${pojo.name}Vo();
+    public openCreate${pojo.name}(pojo: string) {
+        const isPermistted = this.roleService.isPermitted(pojo, "create");
+        if(isPermistted){
+         this.selected${pojo.name} = new ${pojo.name}Vo();
         this.create${pojo.name}Dialog = true;
+        }else{
+             this.messageService.add({
+                severity: 'error', summary: "", detail: "you don't have enough permissions"
+            });
+        }
+       
     }
 
     public delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-                 this.confirmationService.confirm({
+       const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "delete");
+        if(isPermistted){
+                      this.confirmationService.confirm({
                       message: 'Are you sure you want to delete the ${pojo.name} ?',
                       header: 'Confirm',
                       icon: 'pi pi-exclamation-triangle',
@@ -78,9 +104,15 @@ export class ${pojo.name}ListComponent implements OnInit {
                         detail: '${pojo.name} Deleted',
                         life: 3000
                     });
-                                        },error=>console.log(error))
+                    },error=>console.log(error))
                              }
-                                                 });
+                     });
+              }else{
+             this.messageService.add({
+                severity: 'error', summary: "", detail: "you don't have enough permissions"
+              });
+             }
+        
 
      
     }

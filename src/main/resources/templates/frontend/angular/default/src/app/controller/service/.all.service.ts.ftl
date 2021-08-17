@@ -21,11 +21,10 @@ import {${type.simpleName}Vo} from '../model/${type.simpleName}.model';
 })
 export class ${pojo.name}Service {
     private API = ''
-     readonly API  = 'http://localhost:${config.backend.port}/${config.projectName}';
      constructor(private http: HttpClient, private roleService: RoleService) {
         this.role$ = this.roleService.role$;
         this.role$.subscribe(role => {
-            this.API = 'http://localhost:8036${config.backend.port}/api' + role + '/${pojo.name?uncap_first}/';
+            this.API = 'http://localhost:${config.backend.port}/api' + role + '/${pojo.name?uncap_first}/';
         })
     }
      private _${pojo.name?uncap_first}s: Array<${pojo.name}Vo> = [];
@@ -35,7 +34,8 @@ export class ${pojo.name}Service {
      private _edit${pojo.name}Dialog: boolean;
      private _view${pojo.name}Dialog: boolean;
      public edit${pojo.name}$ = new BehaviorSubject<boolean>(false);
-    private _search${pojo.name}:${pojo.name}Vo = new ${pojo.name}Vo();
+     private role$: Observable<string>;
+     private _search${pojo.name}:${pojo.name}Vo = new ${pojo.name}Vo();
 
 
     // getters and setters

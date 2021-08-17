@@ -15,10 +15,10 @@ import { UserListComponent } from './view/user-list/user-list.component';
     RouterModule.forRoot(
       [
          { path: '', redirectTo: 'login', pathMatch: 'full' },
-        { path: "login", component: LoginComponent, canActivate: [GuestGuard] },
-        { path: "register", component: RegisterComponent, canActivate: [GuestGuard] },
+        { path: "login", component: LoginComponent },
+        { path: "register", component: RegisterComponent },
         {
-          path: "",
+          path: "app",
           component: AppMainComponent,
           children: [
             <#list pojos as pojo>

@@ -7,7 +7,7 @@
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
-                       (click)="openCreate${pojo.name}()"></button>
+                       (click)="openCreate${pojo.name}('${pojo.name?lower_case}')"></button>
                      <button pButton pRipple label="Search"
                         icon="pi pi-{{findByCriteriaShow?'angle-down':'angle-right'}}"
                         class="p-button-success p-mr-2 p-mb-2"

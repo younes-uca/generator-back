@@ -22,11 +22,12 @@ export class RegisterComponent implements OnInit {
   }
   submit(){
     const formValues = this.registerForm.value;
-    const {firstName,lastName,userName,password} = formValues;
+    const {firstName,lastName,userName,password,email} = formValues;
     this.user.firstName = firstName;
     this.user.lastName = lastName;
     this.user.username = userName;
     this.user.password = password;
+    this.user.email = email;
     this.authService.register()
 
   }
