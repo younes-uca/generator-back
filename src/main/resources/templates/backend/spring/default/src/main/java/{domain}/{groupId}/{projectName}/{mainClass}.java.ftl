@@ -41,7 +41,7 @@ public static ConfigurableApplicationContext getCtx() {
 
             // Role ${role.name}
             role = new Role();
-            role.setAuthority("${role.name}");
+            role.setAuthority("ROLE_${role.name}");
             permissions = new ArrayList<>();
             <#list role.permissions as permission>
             permissions.add(new Permission("${permission.name}"));
