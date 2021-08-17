@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
+import { RoleService } from './role.service';
 <#list pojo.fieldsSimple as simpleField>
   <#if simpleField.type.simpleName == "Date">
 import * as moment from 'moment';
@@ -19,8 +20,14 @@ import {${type.simpleName}Vo} from '../model/${type.simpleName}.model';
   providedIn: 'root'
 })
 export class ${pojo.name}Service {
-     readonly API  = 'http://localhost:${config.backend.port}/${config.projectName}/${pojo.name?uncap_first}/';
-     constructor(private http: HttpClient) { }
+    private API = ''
+     readonly API  = 'http://localhost:${config.backend.port}/${config.projectName}';
+     constructor(private http: HttpClient, private roleService: RoleService) {
+        this.role$ = this.roleService.role$;
+        this.role$.subscribe(role => {
+            this.API = 'http://localhost:8036${config.backend.port}/api' + role + '/${pojo.name?uncap_first}/';
+        })
+    }
      private _${pojo.name?uncap_first}s: Array<${pojo.name}Vo> = [];
      private _selected${pojo.name}: ${pojo.name}Vo = new ${pojo.name}Vo();
      private _${pojo.name?uncap_first}Selections: Array<${pojo.name}Vo>;

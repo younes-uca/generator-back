@@ -10,32 +10,32 @@ import { TokenService } from './token.service';
   providedIn: 'root'
 })
 export class AuthService {
-     readonly API  = 'http://localhost:${config.backend.port}';
-     public _user = new User();
-     private _authenticatedUser = new User();
-     private  _authenticated = false;
-     public _loggedIn = new BehaviorSubject<boolean>(false);
-     public loggedIn$ = this._loggedIn.asObservable();
-     public error : string = null;
-  constructor(private http:HttpClient,private tokenService:TokenService,private router:Router) { }
+    readonly API  = 'http://localhost:${config.backend.port}';
+    public _user = new User();
+    private _authenticatedUser = new User();
+    private _authenticated = <boolean>JSON.parse(localStorage.getItem('autenticated')) || false;
+    public _loggedIn = new BehaviorSubject<boolean>(false);
+    public loggedIn$ = this._loggedIn.asObservable();
+    public error: string = null;
+    constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) { }
   
     public login(username:string,password:string) {
-        this.http.post<any>(this.API+"/login", {username,password}, {observe: 'response'}).subscribe(
+       this.http.post<any>(this.API + "/login", { username, password }, { observe: 'response' }).subscribe(
             resp => {
                 this.error = null;
                 const jwt = resp.headers.get('Authorization');
-                jwt != null ?  this.tokenService.saveToken(jwt):false;
+                jwt != null ? this.tokenService.saveToken(jwt) : false;
                 this.loadInfos();
                 console.log("you're logged in successfully")
-                this.router.navigate(['/']);
-            }, (error:HttpErrorResponse) => {
-               this.error = error.error;
+                this.router.navigate(['/app']);
+            }, (error: HttpErrorResponse) => {
+                this.error = error.error;
+                console.log(error)
             }
         );
     }
        public loadInfos() {
         const tokenDecoded = this.tokenService.decode();
-        console.log(tokenDecoded)
         const username = tokenDecoded.sub;
         const roles = tokenDecoded.roles;
         const email = tokenDecoded.email;
@@ -48,8 +48,10 @@ export class AuthService {
         this._authenticatedUser.firstName = firstName;
         this._authenticatedUser.email = email;
         this._authenticatedUser.roles = roles;
+        localStorage.setItem('autenticated', JSON.stringify(true));
         this.authenticated = true;
         this._loggedIn.next(true);
+
     }
 
      public hasRole(role:Role): boolean {
@@ -63,13 +65,13 @@ export class AuthService {
                 this.router.navigate(['/login']);
 
             }, (error:HttpErrorResponse) => {
-              console.log("errrrrrrrrrrrrrrrrrrrrooo")
                console.log(error.error)
             }
         );
     }
     public logout() {
         this.tokenService.removeToken();
+        localStorage.setItem('autenticated', JSON.stringify(false));
         this.authenticated = false;
         this._loggedIn.next(false);
         this._authenticatedUser = new User();
