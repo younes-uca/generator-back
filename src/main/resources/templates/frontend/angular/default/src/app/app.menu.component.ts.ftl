@@ -108,17 +108,18 @@ export class AppMenuComponent implements OnInit {
                       label: "${menuItem.libelle}",
                       icon: "${menuItem.icone}",
                       <#if menuItem.pojo??>
-                        routerLink:["${menuItem.libelle}/crud"]
-                      <#else>
-                        items : [
+                      items : [
                          <#list menuItem.menuItems as subMenuItem>
-                            {
+                          {
                           label: "${subMenuItem.libelle}",
                           icon: "${subMenuItem.icone}",
-                          routerLink:["${subMenuItem.libelle}/crud"]
+                          routerLink:["${subMenuItem.libelle?uncap_first}/crud"]
                             },
                         </#list>
                       ]
+                      <#else>
+                      routerLink:["${menuItem.libelle?uncap_first}/crud"]
+
                       </#if>
                    
                    
