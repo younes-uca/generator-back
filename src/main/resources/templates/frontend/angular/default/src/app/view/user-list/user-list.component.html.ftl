@@ -119,3 +119,4 @@
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-toast position="bottom-center"></p-toast>

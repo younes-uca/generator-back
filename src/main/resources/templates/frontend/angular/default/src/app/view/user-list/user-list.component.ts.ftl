@@ -44,6 +44,9 @@ export class UserListComponent implements OnInit {
            console.log("before update")
            console.log(this.user)
            this.userService.update(this.user)
+           this.userDialog = false;
+           this.messageService.add({severity:'success', summary:'User edit', detail:'User was editted'});
+
     }
     deleteUser(user: User) {
         this.confirmationService.confirm({
