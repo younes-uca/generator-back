@@ -14,9 +14,9 @@ import { UserListComponent } from './view/user-list/user-list.component';
   imports: [
     RouterModule.forRoot(
       [
-        { path: '', redirectTo: 'login', pathMatch: 'full' },
-        {path:"login",component:LoginComponent},
-        {path:"register",component:RegisterComponent},
+         { path: '', redirectTo: 'login', pathMatch: 'full' },
+        { path: "login", component: LoginComponent, canActivate: [GuestGuard] },
+        { path: "register", component: RegisterComponent, canActivate: [GuestGuard] },
         {
           path: "",
           component: AppMainComponent,

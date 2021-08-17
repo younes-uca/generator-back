@@ -11,11 +11,12 @@ export class GuestGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-       if (this.authService.authenticated) {
-        this.router.navigate(['/']);
-        return false;
-        }
-        return true;
+    if (this.authService.authenticated) {
+      console.log("hehllowo ")
+      this.router.navigate(['/app']);
+      return false;
+    }
+    return true;
   }
   }
   

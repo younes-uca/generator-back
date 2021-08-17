@@ -10,6 +10,7 @@ import {
 import { AppComponent } from "./app.component";
 import { AppMainComponent } from "./app.main.component";
 import { AuthService } from "./controller/service/Auth.service";
+import { RoleService } from "./controller/service/role.service";
 @Component({
   selector: "app-menu",
   templateUrl: "./app.menu.component.html",
@@ -55,16 +56,25 @@ import { AuthService } from "./controller/service/Auth.service";
 export class AppMenuComponent implements OnInit {
   model: any[];
   modelsuperadmin:any[];
-  modeldefault : any[];
+  modelanonymous: any[];
   <#list roles as role>
   model${role.name?lower_case} : any[];
   </#list>
   constructor(public app: AppComponent,
    public appMain: AppMainComponent,
+   private roleService: RoleService,
    private authService:AuthService,
   private router: Router) {}
 
   ngOnInit() {
+
+       this.modelanonymous = [
+      {
+        label: "Denied",
+        icon: "pi pi-fw pi-home",
+        routerLink: ["denied"]
+      }
+    ]
     this.modelsuperadmin = [
        {
         label: "Favorites",
@@ -74,7 +84,7 @@ export class AppMenuComponent implements OnInit {
            {
             label: "${pojo.name}",
             icon: "pi pi-fw pi-home",
-            routerLink: ["/${pojo.name?uncap_first}/crud"],
+            routerLink: ["${pojo.name?uncap_first}/crud"],
           },
         </#list>
            {
@@ -116,18 +126,17 @@ export class AppMenuComponent implements OnInit {
            </#list>
     ]
     </#list>
-       if(this.authService.authenticated){
-          if(this.authService.authenticatedUser.roles){
-           this.authService.authenticatedUser.roles.forEach(role=>{
-           const roleName = role.authority;
-           eval("this.model = this.model"+ this.getRole(roleName));
-            })
-          }else{
-             this.model = this.modeldefault;
-          this.router.navigate(['/app/denied'])
-          }
+        if (this.authService.authenticated) {
+      if (this.authService.authenticatedUser.roles) {
 
+        this.authService.authenticatedUser.roles.forEach(role => {
+          const roleName: string = this.getRole(role);
+          this.roleService._role.next(roleName.toUpperCase());
+          eval("this.model = this.model" + this.getRole(role));
+        })
       }
+
+    }
   }
   getRole(text){
   const [role, ...rest] = text.split('_');
