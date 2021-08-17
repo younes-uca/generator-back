@@ -4,17 +4,17 @@ package ma.zs.generator.project.config;
  * @author Qada
  */
 public class BackendConfig {
-    private Integer port = 8036;
+    private String port = "8036";
     private String dataSourceUserName = "root";
     private String dataSourcePassword = "";
     private String databaseName = "generated";
     private String dataSourceUrl;
 
-    public int getPort() {
+    public String getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(String port) {
         this.port = port;
     }
 
