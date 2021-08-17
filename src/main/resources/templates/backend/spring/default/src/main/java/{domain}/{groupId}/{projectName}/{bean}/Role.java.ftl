@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -31,6 +32,7 @@ public class Role implements GrantedAuthority {
     private List<Permission> permissions = new ArrayList<>();
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private List<User> users = new ArrayList<>();
 
     public Role(){
