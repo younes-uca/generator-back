@@ -16,5 +16,5 @@ export class User {
     public confirmPassword: string;
     public  createdAt: Date;
     public  updatedAt: Date;
-    public roles: Array<Role> = new Array<Role>();
+    public roles: Array<Role> = [new Role()];
 }
