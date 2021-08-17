@@ -1,3 +1,5 @@
+import { Permission } from "./Permission.model";
+
 export class Role {
     public authority: string;
     public id: string;

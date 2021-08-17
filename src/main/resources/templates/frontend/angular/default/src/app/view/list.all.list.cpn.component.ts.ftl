@@ -7,7 +7,7 @@ import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}
     </#if>
 </#list>
 import { MessageService,ConfirmationService } from 'primeng/api';
-
+import { RoleService } from 'src/app/controller/service/role.service';
 @Component({
   selector: 'app-${pojo.name?uncap_first}-list',
   templateUrl: './${pojo.name?uncap_first}-list.component.html',
@@ -19,7 +19,7 @@ export class ${pojo.name}ListComponent implements OnInit {
     findByCriteriaShow:boolean=false;
      cols: any[] = [];
 
-    constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,private messageService: MessageService,private confirmationService: ConfirmationService) { }
+    constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,private messageService: MessageService,private confirmationService: ConfirmationService,private roleService:RoleService) { }
 
     ngOnInit(): void {
      this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error));
