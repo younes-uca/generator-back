@@ -19,7 +19,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.service
 
 @RequestMapping("/api/users")
 @RestController
-// @PreAuthorize("hasRole(ROLE_SUPER_ADMIN)")
+// @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
 public class UserRest {
     @Autowired
     private UserService userService;
