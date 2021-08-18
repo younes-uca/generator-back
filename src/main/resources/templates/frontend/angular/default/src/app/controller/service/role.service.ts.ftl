@@ -19,21 +19,19 @@ export class RoleService {
       console.log(error.error)
     })
   }
-    isPermitted(pojo: string, action: string): boolean {
-    this.role$.subscribe(role => {
-      const foundRole = this.roles.find(r => "ROLE_" + role.toUpperCase() == r.authority);
-      let permission: string[];
-      if (foundRole) {
-        permission = foundRole.permissions
-          .map(permission => permission.name)
-          .filter(name => name.split('.')[0].toLocaleLowerCase() == pojo)
-          .filter(name => name.split('.')[1] == action)
-      }
-      return permission ? permission.length > 0 ? true : false : false;
-
-    })
-
-    return false;
+ async isPermitted(pojo: string, action: string): Promise<boolean> {
+    const role = await this.role$.pipe(take(1)).toPromise();
+    if (role === 'SUPERADMIN') return true;
+    const foundRole = this.roles.find(r => "ROLE_" + role.toUpperCase() == r.authority);
+    console.log(foundRole)
+    let permissions: string[];
+    if (foundRole) {
+      permissions = foundRole.permissions
+        .map(permission => permission.name)
+        .filter(name => name.split('.')[0].toLocaleLowerCase() == pojo)
+        .filter(name => name.split('.')[1] == action)
+    }
+    return permissions ? ((permissions.length > 0) ? true : false) : false;
   }
   get roles():Role[]{
     return this._roles;

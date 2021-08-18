@@ -23,6 +23,7 @@ export class ${pojo.name}ListComponent implements OnInit {
 
     ngOnInit(): void {
      this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error));
+      this.roleService.findAll()
     } 
     
     // methods 
@@ -43,8 +44,8 @@ export class ${pojo.name}ListComponent implements OnInit {
         ];
     }
     
-    public edit${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-        const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "edit");
+    public async edit${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
+        const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "edit");
          if(isPermistted){
          this.selected${pojo.name} = ${pojo.name?uncap_first};
          this.edit${pojo.name}Dialog = true;
@@ -59,8 +60,8 @@ export class ${pojo.name}ListComponent implements OnInit {
     
 
 
-    public view${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-        const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "view");
+    public async view${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
+        const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "view");
         if(isPermistted){
        this.selected${pojo.name} = ${pojo.name?uncap_first};
         this.view${pojo.name}Dialog = true;
@@ -72,8 +73,8 @@ export class ${pojo.name}ListComponent implements OnInit {
         
     }
     
-    public openCreate${pojo.name}(pojo: string) {
-        const isPermistted = this.roleService.isPermitted(pojo, "create");
+    public async openCreate${pojo.name}(pojo: string) {
+        const isPermistted = await this.roleService.isPermitted(pojo, "create");
         if(isPermistted){
          this.selected${pojo.name} = new ${pojo.name}Vo();
         this.create${pojo.name}Dialog = true;
@@ -85,8 +86,8 @@ export class ${pojo.name}ListComponent implements OnInit {
        
     }
 
-    public delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-       const isPermistted = this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "delete");
+    public async delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
+       const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "delete");
         if(isPermistted){
                       this.confirmationService.confirm({
                       message: 'Are you sure you want to delete the ${pojo.name} ?',
