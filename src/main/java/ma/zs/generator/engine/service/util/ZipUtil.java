@@ -129,6 +129,18 @@ public class ZipUtil {
             return null;
     }
 
+    public static byte[] convertZipToByteArray2(File f) {
+        if (f != null) {
+            try {
+                return java.nio.file.Files.readAllBytes(f.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else
+            return null;
+    }
+
     public static String zipBytes(String filename, byte[] input) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ZipOutputStream zos = new ZipOutputStream(baos);

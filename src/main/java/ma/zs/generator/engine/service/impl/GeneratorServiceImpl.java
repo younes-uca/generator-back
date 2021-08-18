@@ -176,9 +176,9 @@ public class GeneratorServiceImpl implements GeneratorService {
         File project = new File(filePath);
         ZipUtil.zipIt(project, project.getParent());
         File projectAsZip = new File(filePath + ".zip");
-        byte[] byteArray = ZipUtil.convertZipToByteArray(projectAsZip);
+        byte[] byteArray = ZipUtil.convertZipToByteArray2(projectAsZip);
 
-        projectAsZip.delete();
+        //projectAsZip.delete();
         return byteArray;
     }
 
