@@ -101,7 +101,7 @@ export class ${pojo.name}Service {
     }
     
     delete(${pojo.name?uncap_first}: ${pojo.name}Vo) {
-         return this.http.delete<number>(this.API+"/id/"+${pojo.name?uncap_first}.id);
+         return this.http.delete<number>(this.API+"id/"+${pojo.name?uncap_first}.id);
     }
 
 

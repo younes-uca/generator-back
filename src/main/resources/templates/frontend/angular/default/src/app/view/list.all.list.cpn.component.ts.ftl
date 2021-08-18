@@ -74,7 +74,7 @@ export class ${pojo.name}ListComponent implements OnInit {
     }
     
     public async openCreate${pojo.name}(pojo: string) {
-        const isPermistted = await this.roleService.isPermitted(pojo, "create");
+        const isPermistted = await this.roleService.isPermitted(pojo, "add");
         if(isPermistted){
          this.selected${pojo.name} = new ${pojo.name}Vo();
         this.create${pojo.name}Dialog = true;

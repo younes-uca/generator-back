@@ -64,7 +64,7 @@
                             </#list>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-commande>
+                <ng-template pTemplate="body" let-${pojo.name?uncap_first}>
                     <tr>
                         <td>
                         <p-tableCheckbox [value]="${pojo.name?uncap_first}"></p-tableCheckbox>
@@ -95,9 +95,9 @@
             </p-table>
         </div>
 
-        <app-commande-create></app-commande-create>
-        <app-commande-edit></app-commande-edit>
-        <app-commande-view></app-commande-view>
+        <app-${pojo.name?uncap_first}-create></app-${pojo.name?uncap_first}-create>
+        <app-${pojo.name?uncap_first}-edit></app-${pojo.name?uncap_first}-edit>
+        <app-${pojo.name?uncap_first}-view></app-${pojo.name?uncap_first}-view>
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
 </div>

@@ -21,7 +21,7 @@ import ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${c
 
 @Api("Manages ${pojo.name?uncap_first} services")
 @RestController
-@RequestMapping("/api/SUPER_ADMIN/${pojo.name?uncap_first}")
+@RequestMapping("/api/SUPERADMIN/${pojo.name?uncap_first}")
 @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
 public class ${pojo.name}Rest {
 
