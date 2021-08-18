@@ -1,4 +1,4 @@
-package  ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${config.rest}.${config.provided}.${config.restFacade};
+package  ${config.domain}.${config.groupId}.${config.projectName}.${config.ws}.${config.rest}.${config.provided}.${config.restFacade}.SUPER_ADMIN;
 
 import java.util.List;
 
