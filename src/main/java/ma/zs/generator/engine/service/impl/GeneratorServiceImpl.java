@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author Qada
+ * @author MoiseGui
  */
 @Service
 public class GeneratorServiceImpl implements GeneratorService {
@@ -47,11 +47,12 @@ public class GeneratorServiceImpl implements GeneratorService {
         System.out.println("userConfig = " + userConfig);
         if (userConfig.getPojos() == null || userConfig.getPojos().size() == 0)
             return null;
-        for (Pojo pojo : userConfig.getPojos()) {
-            System.out.println("pojo = " + pojo);
 
-        }
+        // Prepare the pojos
         userConfig.setPojos(pojoService.validatePojos(userConfig.getPojos()));
+        // Prepare the pojos in the permissions
+        userConfig.getRoles().forEach(r -> pojoService.validatePojosForPermissions(r.getPermissions()));
+
         if (userConfig.getPojos().size() == 0)
             return null;
 

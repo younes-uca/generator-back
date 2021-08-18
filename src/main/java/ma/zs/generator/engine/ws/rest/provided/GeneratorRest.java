@@ -24,7 +24,6 @@ public class GeneratorRest {
     @ApiOperation("this method used by our angular app")
     @PostMapping("/")
     public GeneratedProject generate(@RequestBody UserConfig userConfig) {
-
         return generator.generate(userConfig);
     }
 

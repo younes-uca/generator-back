@@ -22,12 +22,17 @@ export class ${pojo.name}ListComponent implements OnInit {
     constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,private messageService: MessageService,private confirmationService: ConfirmationService,private roleService:RoleService) { }
 
     ngOnInit(): void {
-     this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error));
+      this.load${pojo.name?cap_first}s();
       this.roleService.findAll()
     } 
     
     // methods 
-  
+    public async load${pojo.name?cap_first}s(){
+        const isPermistted = await this.roleService.isPermitted("${pojo.name?uncap_first}", "list");
+        isPermistted ? this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error))
+        : this.messageService.add({severity: 'error', summary: "", detail: "you don't have enough permissions"});
+    }
+
  public searchRequest(){
         this.${pojo.name?uncap_first}Service.findByCriteria(this.search${pojo.name}).subscribe(${pojo.name?uncap_first}s=>{
             

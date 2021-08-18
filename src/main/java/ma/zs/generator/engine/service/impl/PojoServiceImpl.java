@@ -1,9 +1,6 @@
 package ma.zs.generator.engine.service.impl;
 
-import ma.zs.generator.engine.bean.Field;
-import ma.zs.generator.engine.bean.Pojo;
-import ma.zs.generator.engine.bean.PojoConfig;
-import ma.zs.generator.engine.bean.Type;
+import ma.zs.generator.engine.bean.*;
 import ma.zs.generator.engine.service.facade.PojoService;
 import ma.zs.generator.engine.service.util.PojoUtil;
 import ma.zs.generator.engine.service.util.StringUtil;
@@ -23,15 +20,14 @@ public class PojoServiceImpl implements PojoService {
 
     public List<Pojo> validatePojos(List<Pojo> pojos) {
         fillPojoLists(pojos);
-//        for (Pojo pojo : pojos) {
-//            setFieldsSimpleMinMaxAndSimple(pojo);
-//            setNestedPojo(pojo, pojos);
-//            preparePojoBoolean(pojo);
-//            preparePojoComplex(pojo);
-//
-//        }
-//        return pojos;
         return prepare(pojos);
+    }
+
+    public List<Permission> validatePojosForPermissions(List<Permission> permissions) {
+        for(Permission permission : permissions){
+            prepareRefAndId(permission.getPojo());
+        }
+        return permissions;
     }
 
     public List<Pojo>
