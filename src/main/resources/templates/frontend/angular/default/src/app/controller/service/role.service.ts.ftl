@@ -23,7 +23,6 @@ export class RoleService {
     const role = await this.role$.pipe(take(1)).toPromise();
     if (role === 'SUPERADMIN') return true;
     const foundRole = this.roles.find(r => "ROLE_" + role.toUpperCase() == r.authority);
-    console.log(foundRole)
     let permissions: string[];
     if (foundRole) {
       permissions = foundRole.permissions
