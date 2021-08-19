@@ -24,7 +24,7 @@ export class ${pojo.name}Service {
      constructor(private http: HttpClient, private roleService: RoleService) {
         this.role$ = this.roleService.role$;
         this.role$.subscribe(role => {
-            this.API = 'http://localhost:${config.backend.port}/api/' + role + '/${pojo.name?uncap_first}/';
+            this.API = 'http://localhost:${config.backend.port}/api/' + role + '/${pojo.name?uncap_first}';
         })
     }
      private _${pojo.name?uncap_first}s: Array<${pojo.name}Vo> = [];
