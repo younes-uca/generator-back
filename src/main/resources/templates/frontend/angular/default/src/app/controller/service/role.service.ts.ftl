@@ -12,14 +12,12 @@ export class RoleService {
   public _role = new BehaviorSubject<string>('');
   public role$: Observable<string> = this._role.asObservable();
   constructor(private http:HttpClient) { }
-  findAll(){
-    this.http.get<Role[]>(this.API+"/roles/").subscribe(roles=>{
-      this._roles = roles;
-      
-    },(error:HttpErrorResponse)=>{
-      console.log(error.error)
-    })
+
+  async findAll(){
+    const roles = await this.http.get<Role[]>(this.API+"/roles/").pipe(take(1)).toPromise();
+    this._roles = roles;
   }
+  
  async isPermitted(pojo: string, action: string): Promise<boolean> {
     const role = await this.role$.pipe(take(1)).toPromise();
     if (role === 'SUPERADMIN') return true;
@@ -28,7 +26,7 @@ export class RoleService {
     if (foundRole) {
       permissions = foundRole.permissions
         .map(permission => permission.name)
-        .filter(name => name.split('.')[0].toLocaleLowerCase() == pojo)
+        .filter(name => name.split('.')[0].toLocaleLowerCase() == pojo.toLocaleLowerCase())
         .filter(name => name.split('.')[1] == action)
     }
     return permissions ? ((permissions.length > 0) ? true : false) : false;

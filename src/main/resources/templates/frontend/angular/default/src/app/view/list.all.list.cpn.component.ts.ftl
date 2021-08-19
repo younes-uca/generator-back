@@ -6,6 +6,12 @@ import {${pojo.name}Vo} from '../../../controller/model/${pojo.name}.model';
 import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}.model';
     </#if>
 </#list>
+<#list pojo.fieldsSimple as simpleField>
+  <#if simpleField.type.simpleName == "Date">
+import * as moment from 'moment';
+      <#assign dateFieldName = simpleField.name>
+  </#if>
+</#list>
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { RoleService } from 'src/app/controller/service/role.service';
 @Component({
@@ -18,22 +24,34 @@ export class ${pojo.name}ListComponent implements OnInit {
     // declarations
     findByCriteriaShow:boolean=false;
      cols: any[] = [];
+       <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
+        <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
+           search${pojo.name?cap_first}Min: Date = null;
+           search${pojo.name?cap_first}Max: Date = null;
+        </#if>
+       </#list>
 
     constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,private messageService: MessageService,private confirmationService: ConfirmationService,private roleService:RoleService) { }
 
     ngOnInit(): void {
       this.load${pojo.name?cap_first}s();
-      this.roleService.findAll()
     } 
     
     // methods 
     public async load${pojo.name?cap_first}s(){
-        const isPermistted = await this.roleService.isPermitted("${pojo.name?uncap_first}", "list");
+        await this.roleService.findAll();
+        const isPermistted = await this.roleService.isPermitted("${pojo.name}", "list");
         isPermistted ? this.${pojo.name?uncap_first}Service.findAll().subscribe(${pojo.name?uncap_first}s => this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s,error=>console.log(error))
         : this.messageService.add({severity: 'error', summary: "", detail: "you don't have enough permissions"});
     }
 
  public searchRequest(){
+        <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
+        <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
+        this.search${pojo.name}.${fieldSimpleNumberOrDate.name}Max = this.search${pojo.name?cap_first}Max ? moment(this.search${pojo.name?cap_first}Max).format("YYYY-MM-DD") : '';
+        this.search${pojo.name}.${fieldSimpleNumberOrDate.name}Min = this.search${pojo.name?cap_first}Min ? moment(this.search${pojo.name?cap_first}Min).format("YYYY-MM-DD") : '';
+        </#if>
+       </#list>
         this.${pojo.name?uncap_first}Service.findByCriteria(this.search${pojo.name}).subscribe(${pojo.name?uncap_first}s=>{
             
             this.${pojo.name?uncap_first}s = ${pojo.name?uncap_first}s;
@@ -50,7 +68,7 @@ export class ${pojo.name}ListComponent implements OnInit {
     }
     
     public async edit${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-        const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "edit");
+        const isPermistted = await this.roleService.isPermitted("${pojo.name}", "edit");
          if(isPermistted){
          this.selected${pojo.name} = ${pojo.name?uncap_first};
          this.edit${pojo.name}Dialog = true;
@@ -66,7 +84,7 @@ export class ${pojo.name}ListComponent implements OnInit {
 
 
     public async view${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-        const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "view");
+        const isPermistted = await this.roleService.isPermitted("${pojo.name}", "view");
         if(isPermistted){
        this.selected${pojo.name} = ${pojo.name?uncap_first};
         this.view${pojo.name}Dialog = true;
@@ -92,7 +110,7 @@ export class ${pojo.name}ListComponent implements OnInit {
     }
 
     public async delete${pojo.name}(${pojo.name?uncap_first}:${pojo.name}Vo){
-       const isPermistted = await this.roleService.isPermitted(Object.keys({ ${pojo.name?uncap_first} })[0], "delete");
+       const isPermistted = await this.roleService.isPermitted("${pojo.name}", "delete");
         if(isPermistted){
                       this.confirmationService.confirm({
                       message: 'Are you sure you want to delete the ${pojo.name} ?',
