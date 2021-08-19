@@ -135,6 +135,8 @@ import { AccessDeniedComponent } from './auth/access-denied/access-denied.compon
 import { UserListComponent } from './view/user-list/user-list.component';
 import { UserService } from './controller/service/user.service';
 import { RoleService } from './controller/service/role.service';
+import { HomeComponent } from './demo/view/home/home.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -264,7 +266,8 @@ import { RoleService } from './controller/service/role.service';
     AppErrorComponent,
     AppAccessdeniedComponent,
     AppLoginComponent,
-    UserListComponent
+    UserListComponent,
+    HomeComponent
   ],
   providers: [
     /*    { provide: LocationStrategy, useClass: HashLocationStrategy }, */

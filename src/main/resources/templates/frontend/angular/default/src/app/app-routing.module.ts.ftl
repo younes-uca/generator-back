@@ -10,6 +10,7 @@ import { AuthGuard } from './controller/guards/auth.guard';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
 import { UserListComponent } from './view/user-list/user-list.component';
+import { HomeComponent } from './demo/view/home/home.component';
 @NgModule({
   imports: [
     RouterModule.forRoot(
@@ -26,6 +27,8 @@ import { UserListComponent } from './view/user-list/user-list.component';
             </#list>
              {path:'denied',component:AccessDeniedComponent},
              { path: 'user', children: [{path: 'crud', component: UserListComponent}]},
+              { path: 'home', component: HomeComponent },
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
           ],
           canActivate:[AuthGuard]
         },
