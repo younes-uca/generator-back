@@ -38,6 +38,7 @@ export class UserListComponent implements OnInit {
         this.submitted = true;
         console.log(this.user)
         this.userService.save(this.user)
+        this.userDialog = false;
     }
     editUserSubmit(){
            this.submitted = true;
