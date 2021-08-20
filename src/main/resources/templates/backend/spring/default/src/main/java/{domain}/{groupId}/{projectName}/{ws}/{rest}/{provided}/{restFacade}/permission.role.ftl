@@ -37,6 +37,12 @@ public class ${permissions[0].pojo.name?cap_first}Rest${roleName?cap_first} {
     public List<${permissions[0].pojo.name?cap_first}Vo> findAll(){
         return ${permissions[0].pojo.name?uncap_first}Converter.toVo(${permissions[0].pojo.name?uncap_first}Service.findAll());
     }
+
+    @ApiOperation("Search ${permissions[0].pojo.name?uncap_first} by a specific criteria")
+    @PostMapping("/search")
+    public List<${permissions[0].pojo.name}Vo> findByCriteria(@RequestBody ${permissions[0].pojo.name}Vo ${permissions[0].pojo.name?uncap_first}Vo){
+        return ${permissions[0].pojo.name?uncap_first}Converter.toVo(${permissions[0].pojo.name?uncap_first}Service.findByCriteria(${permissions[0].pojo.name?uncap_first}Vo));
+    }
     </#if>
     <#if permission.name?contains("view") >
 

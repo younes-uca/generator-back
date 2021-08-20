@@ -23,9 +23,9 @@
             </#list>
             <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
                      <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
-                        <p-calendar class="p-mr-2" placeholder="dateMin" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate.name}Min"
+                        <p-calendar class="p-mr-2" placeholder="dateMin" [(ngModel)]="search${pojo.name?cap_first}Min"
                                 dateFormat="dd.mm.yy"></p-calendar>
-                        <p-calendar class="p-mr-2" placeholder="dateMin" [(ngModel)]="search${pojo.name}.${fieldSimpleNumberOrDate.name}Max"
+                        <p-calendar class="p-mr-2" placeholder="dateMax" [(ngModel)]="search${pojo.name?cap_first}Max"
                                 dateFormat="dd.mm.yy"></p-calendar>
                   <#elseif fieldSimpleNumberOrDate.type.simpleName == "String">
                   <#else>
@@ -62,6 +62,7 @@
                            <#list pojo.fieldsSimple as field>
                             <th pSortableColumn="${field.name?uncap_first}">${field.name} <p-sortIcon field="${field.name?uncap_first}"></p-sortIcon></th>
                             </#list>
+                        <th>Actions </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-${pojo.name?uncap_first}>
@@ -89,7 +90,7 @@
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="p-d-flex p-ai-center p-jc-between">
-                       In total there are {{${pojo.name?uncap_first}s ? ${pojo.name?uncap_first}s.length : 0 }} {{${pojo.name?uncap_first}s}}.
+                     In total there {{${pojo.name?uncap_first}s ? ${pojo.name?uncap_first}s.length == 1 ? 'is' : 'are' : 'is' }} {{${pojo.name?uncap_first}s ? ${pojo.name?uncap_first}s.length : 0 }} {{${pojo.name?uncap_first}s ? ${pojo.name?uncap_first}s.length == 1 ? '${pojo.name?uncap_first}' : '${pojo.name?uncap_first}s' : 0 }}.
                     </div>
                 </ng-template>
             </p-table>

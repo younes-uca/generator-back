@@ -24,7 +24,7 @@ export class ${pojo.name}Service {
      constructor(private http: HttpClient, private roleService: RoleService) {
         this.role$ = this.roleService.role$;
         this.role$.subscribe(role => {
-            this.API = 'http://localhost:${config.backend.port}/api/' + role + '/${pojo.name?uncap_first}';
+            this.API = 'http://localhost:${config.backend.port}/api/' + role + '/${pojo.name?uncap_first}/';
         })
     }
      private _${pojo.name?uncap_first}s: Array<${pojo.name}Vo> = [];
@@ -111,13 +111,7 @@ export class ${pojo.name}Service {
     
 
      public findByCriteria(${pojo.name?uncap_first}:${pojo.name}Vo):Observable<Array<${pojo.name}Vo>>{
-         <#list pojo.fieldsSimpleNumberOrDate as fieldSimpleNumberOrDate>
-        <#if fieldSimpleNumberOrDate.type.simpleName == "Date">
-           ${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}Max = moment(${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}).format("YYYY-MM-DD");
-           ${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}Min = moment(${pojo.name?uncap_first}.${fieldSimpleNumberOrDate.name}).format("YYYY-MM-DD");
-        </#if>
-       </#list>
-           return this.http.post<Array<${pojo.name}Vo>>(this.API+"/search",${pojo.name?uncap_first});
+           return this.http.post<Array<${pojo.name}Vo>>(this.API+"search",${pojo.name?uncap_first});
     }
 
 
