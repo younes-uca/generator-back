@@ -117,7 +117,7 @@ public class ${pojo.name}ServiceImpl implements ${pojo.name}Service {
     <#if (fieldGeneric.pojo.reference)??>
         <#if fieldGeneric.pojo.name != pojo.name>
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = ${fieldGeneric.type.simpleName?uncap_first}Service.findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
-        <#else>
+        <#else> 
             ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first}  = findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
         </#if>
     <#else>
@@ -177,17 +177,30 @@ public class ${pojo.name}ServiceImpl implements ${pojo.name}Service {
     public ${pojo.name} update(${pojo.name?cap_first} ${pojo.name?uncap_first}){
         ${pojo.name} founded${pojo.name} = findBy${pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${pojo.id.name?cap_first}());
         if(founded${pojo.name}==null) return null;
-        <#list pojo.fieldsList as fieldList>
-    <#if fieldList.mappedBy??>
-        if(ListUtil.isNotEmpty(${pojo.name?uncap_first}.get${fieldList.name?cap_first}())){
-        <#if fieldList.pojo.name != pojo.name>
-            saved${pojo.name}.set${fieldList.name?cap_first}(${fieldList.type.simpleName?uncap_first}Service.save(prepare${fieldList.name?cap_first}(saved${pojo.name},${pojo.name?uncap_first}.get${fieldList.name?cap_first}())));
-        <#else>
-            saved${pojo.name}.set${fieldList.name?cap_first}(save(prepare${fieldList.name?cap_first}(saved${pojo.name},${pojo.name?uncap_first}.get${fieldList.name?cap_first}())));
+    <#list pojo.fieldsGeneric as fieldGeneric>
 
+        if(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()!=null){
+    <#if (fieldGeneric.pojo.reference)??>
+        <#if fieldGeneric.pojo.name != pojo.name>
+            ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = ${fieldGeneric.type.simpleName?uncap_first}Service.findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
+        <#else>
+            ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first}  = findBy${fieldGeneric.pojo.reference.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.reference.name?cap_first}());
         </#if>
-        }
+    <#else>
+        <#if (fieldGeneric.pojo.name)?? && fieldGeneric.pojo.name != pojo.name>
+            ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = ${fieldGeneric.type.simpleName?uncap_first}Service.findBy${fieldGeneric.pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.id.name?cap_first}());
+        <#elseif (fieldGeneric.pojo.id)??>
+            ${fieldGeneric.pojo.name} ${fieldGeneric.name?uncap_first} = findBy${fieldGeneric.pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}().get${fieldGeneric.pojo.id.name?cap_first}());
+        </#if>
     </#if>
+            if(${fieldGeneric.name?uncap_first} == null)
+    <#if (fieldGeneric.pojo.name)?? &&  fieldGeneric.pojo.name != pojo.name>
+                ${pojo.name?uncap_first}.set${fieldGeneric.name?cap_first}(${fieldGeneric.type.simpleName?uncap_first}Service.save(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()));
+    <#else>
+                ${pojo.name?uncap_first}.set${fieldGeneric.name?cap_first}(save(${pojo.name?uncap_first}.get${fieldGeneric.name?cap_first}()));
+    </#if>
+            else ${pojo.name?uncap_first}.set${fieldGeneric.name?cap_first}(${fieldGeneric.name?uncap_first});
+        }
 </#list>
         return  ${pojo.name?uncap_first}Dao.save(${pojo.name?uncap_first});
     }
