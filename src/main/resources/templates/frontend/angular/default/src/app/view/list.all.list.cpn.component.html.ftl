@@ -4,7 +4,7 @@
         <p-toast></p-toast>
 
         <div class="card">
-            <p-toolbar styleClass="p-mb-4">
+         <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
                        (click)="openCreate${pojo.name}('${pojo.name?lower_case}')"></button>
@@ -45,7 +45,7 @@
                 [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [showCurrentPageReport]="true">
-                <ng-template pTemplate="caption">
+                  <ng-template pTemplate="caption">
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <h5 class="p-m-0">Liste des ${pojo.name}s</h5>
                         <span class="p-input-icon-left">
@@ -62,6 +62,9 @@
                            <#list pojo.fieldsSimple as field>
                             <th pSortableColumn="${field.name?uncap_first}">${field.name} <p-sortIcon field="${field.name?uncap_first}"></p-sortIcon></th>
                             </#list>
+                         <#list pojo.fieldsGeneric as fieldGeneric>
+                         <th> ${fieldGeneric.type.simpleName} </th>
+                         </#list>  
                         <th>Actions </th>
                     </tr>
                 </ng-template>
@@ -77,7 +80,13 @@
                                 <td>{{${pojo.name?uncap_first}.${field.name} }}
                                 </#if>
                         </#list>
-
+                         <#list pojo.fieldsGeneric as fieldGeneric>
+                          <#if (fieldGeneric.pojo.reference)??>
+                               <#if fieldGeneric.pojo.name != pojo.name>
+                                 <td> {{${pojo.name?uncap_first}.${fieldGeneric.name}Vo ? ${pojo.name?uncap_first}.${fieldGeneric.name}Vo.${fieldGeneric.pojo.reference.name} : ' ${fieldGeneric.name} non spécifié' }} </td>
+                               </#if>
+                         </#if>
+                         </#list>  
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
                                (click)="edit${pojo.name}(${pojo.name?uncap_first})"></button>

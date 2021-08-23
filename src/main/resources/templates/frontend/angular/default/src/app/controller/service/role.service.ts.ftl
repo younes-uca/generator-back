@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 export class RoleService {
   private readonly API = "http://localhost:8036/api"
   _roles:Role[] = [];
-  public _role = new BehaviorSubject<string>('');
+    public _role = new BehaviorSubject<string>(localStorage.getItem('role') || '');
   public role$: Observable<string> = this._role.asObservable();
   constructor(private http:HttpClient) { }
 

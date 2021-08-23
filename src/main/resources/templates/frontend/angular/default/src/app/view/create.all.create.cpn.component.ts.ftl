@@ -6,6 +6,9 @@ import {${pojo.name}Vo} from '../../../controller/model/${pojo.name}.model';
 import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}.model';
     </#if>
 </#list>
+<#list pojo.fieldsGeneric as fieldGeneric>
+import { ${fieldGeneric.name?cap_first}Service } from 'src/app/controller/service/${fieldGeneric.name?cap_first}.service';
+</#list>
 
 @Component({
   selector: 'app-${pojo.name?uncap_first}-create',
@@ -14,7 +17,17 @@ import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}
 })
 export class ${pojo.name}CreateComponent  {
 
-constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service) { }
+constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service,
+ <#list pojo.fieldsGeneric as fieldGeneric>
+ private ${fieldGeneric.name}Service:${fieldGeneric.name?cap_first}Service,
+</#list>) {
+    <#list pojo.fieldsGeneric as fieldGeneric>
+     this.${fieldGeneric.name}Service.findAll().subscribe(${fieldGeneric.name}s => {
+         this.${fieldGeneric.name}s = ${fieldGeneric.name}s;
+     }) 
+     </#list>
+
+ }
 // methods 
 
 public save(){
@@ -56,6 +69,14 @@ set ${pojo.name?uncap_first}s(value: Array<${pojo.name}Vo>) {
     set create${pojo.name}Dialog(value: boolean) {
         this.${pojo.name?uncap_first}Service.create${pojo.name}Dialog= value;
        }
+     <#list pojo.fieldsGeneric as fieldGeneric>
+     get ${fieldGeneric.name}s() : Array<${fieldGeneric.name?cap_first}Vo>{
+         return this.${fieldGeneric.name}Service.${fieldGeneric.name}s;
+     }
+     set ${fieldGeneric.name}s (value : Array<${fieldGeneric.name?cap_first}Vo>){
+         this.${fieldGeneric.name}Service.${fieldGeneric.name}s = value;
+     }
+    </#list>
 
 
 }

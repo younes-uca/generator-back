@@ -20,6 +20,17 @@
              </#if>
              </#if>
      </#list>   
+     <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+            <div class="p-field" *ngIf="${fieldGeneric.name?uncap_first}s && ${fieldGeneric.name?uncap_first}s.length > 0">
+             <label>${fieldGeneric.name?cap_first}</label>
+              <p-dropdown [options]="${fieldGeneric.name?uncap_first}s" placeholder="${fieldGeneric.name?uncap_first}s" [(ngModel)]="selected${pojo.name}.${fieldGeneric.name?uncap_first}Vo" optionLabel="${fieldGeneric.pojo.reference.name}">
+              </p-dropdown>  
+            </div>
+            </#if>
+         </#if>
+     </#list>  
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideCreateDialog()"></button>

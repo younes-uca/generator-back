@@ -135,6 +135,7 @@ export class AppMenuComponent implements OnInit {
 
         this.authService.authenticatedUser.roles.forEach(role => {
           const roleName: string = this.getRole(role);
+           localStorage.setItem('role', roleName.toUpperCase());
           this.roleService._role.next(roleName.toUpperCase());
           eval("this.model = this.model" + this.getRole(role));
         })

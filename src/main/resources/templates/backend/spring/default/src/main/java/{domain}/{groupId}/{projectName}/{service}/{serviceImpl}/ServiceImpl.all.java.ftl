@@ -177,6 +177,18 @@ public class ${pojo.name}ServiceImpl implements ${pojo.name}Service {
     public ${pojo.name} update(${pojo.name?cap_first} ${pojo.name?uncap_first}){
         ${pojo.name} founded${pojo.name} = findBy${pojo.id.name?cap_first}(${pojo.name?uncap_first}.get${pojo.id.name?cap_first}());
         if(founded${pojo.name}==null) return null;
+        <#list pojo.fieldsList as fieldList>
+    <#if fieldList.mappedBy??>
+        if(ListUtil.isNotEmpty(${pojo.name?uncap_first}.get${fieldList.name?cap_first}())){
+        <#if fieldList.pojo.name != pojo.name>
+            saved${pojo.name}.set${fieldList.name?cap_first}(${fieldList.type.simpleName?uncap_first}Service.save(prepare${fieldList.name?cap_first}(saved${pojo.name},${pojo.name?uncap_first}.get${fieldList.name?cap_first}())));
+        <#else>
+            saved${pojo.name}.set${fieldList.name?cap_first}(save(prepare${fieldList.name?cap_first}(saved${pojo.name},${pojo.name?uncap_first}.get${fieldList.name?cap_first}())));
+
+        </#if>
+        }
+    </#if>
+</#list>
         return  ${pojo.name?uncap_first}Dao.save(${pojo.name?uncap_first});
     }
 

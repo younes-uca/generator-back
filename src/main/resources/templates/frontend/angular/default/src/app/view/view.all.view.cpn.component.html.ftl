@@ -23,6 +23,18 @@
             </#if>
          </#if>
         </#list>
+            <#list pojo.fieldsGeneric as fieldGeneric>
+                          <#if (fieldGeneric.pojo.reference)??>
+                               <#if fieldGeneric.pojo.name != pojo.name>
+                <div class="p-formgrid p-grid">
+                     <div class="p-field p-col">
+                         <label for="totalPaye">${fieldGeneric.name}</label>
+                          <input class="p-mb-2 p-mr-2" type="text" pInputText  [(ngModel)]="selected${pojo.name}.${fieldGeneric.name}Vo.${fieldGeneric.pojo.reference.name}" required autofocus disabled />
+                          </div>
+                              </div>
+                               </#if>
+                         </#if>
+                         </#list> 
     </ng-template>
 
     <ng-template pTemplate="footer">

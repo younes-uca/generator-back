@@ -12,6 +12,7 @@ import * as moment from 'moment';
       <#assign dateFieldName = simpleField.name>
   </#if>
 </#list>
+
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { RoleService } from 'src/app/controller/service/role.service';
 @Component({

@@ -72,6 +72,7 @@ export class AuthService {
     public logout() {
         this.tokenService.removeToken();
         localStorage.setItem('autenticated', JSON.stringify(false));
+         localStorage.removeItem('role');
         this.authenticated = false;
         this._loggedIn.next(false);
         this._authenticatedUser = new User();

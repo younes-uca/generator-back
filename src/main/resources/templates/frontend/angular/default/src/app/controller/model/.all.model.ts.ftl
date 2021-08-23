@@ -36,7 +36,7 @@ export class ${pojo.name}Vo {
     </#list>
     <#list pojo.fieldsGeneric as fieldGeneric>
     <#if fieldGeneric.pojo??> 
-    public ${fieldGeneric.name}Vo: ${fieldGeneric.pojo.name}Vo;
+    public ${fieldGeneric.name}Vo = new ${fieldGeneric.pojo.name}Vo();
         <#else> </#if>
     </#list>
     <#list pojo.fieldsList as fieldList>

@@ -21,6 +21,17 @@
             </#if>
         </#if>
     </#list>  
+      <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+            <div class="p-field" *ngIf="showDropDown">
+             <label>${fieldGeneric.name?cap_first}</label>
+              <p-dropdown [options]="${fieldGeneric.name?uncap_first}s" placeholder="${fieldGeneric.name?uncap_first}s" formControlName="${fieldGeneric.name?uncap_first}Vo" optionLabel="${fieldGeneric.pojo.reference.name}">
+              </p-dropdown>  
+            </div>
+            </#if>
+         </#if>
+     </#list>  
     </ng-template>
 
     <ng-template pTemplate="footer">

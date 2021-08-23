@@ -8,6 +8,10 @@ import {${pojo.name}Vo} from '../../../controller/model/${pojo.name}.model';
 import {${type.simpleName}Vo} from '../../../controller/model/${type.simpleName}.model';
     </#if>
 </#list>
+<#list pojo.fieldsGeneric as fieldGeneric>
+import { ${fieldGeneric.name?cap_first}Service } from 'src/app/controller/service/${fieldGeneric.name?cap_first}.service';
+</#list>
+
 
 @Component({
   selector: 'app-${pojo.name?uncap_first}-edit',
@@ -24,18 +28,31 @@ export class ${pojo.name}EditComponent implements OnInit {
       ${field.name}: new FormControl("", [Validators.required]),
       <#else>
          <#if field.type.simpleName != "Long">
-          ${field.name}:new FormControl(0,[Validators.required])
+          ${field.name}:new FormControl(0,[Validators.required]),
          </#if>
       </#if>
     </#list>
+    <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+          ${fieldGeneric.name?uncap_first}Vo : new FormControl(null),
+            </#if>
+         </#if>
+     </#list>  
   }); 
-constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service) { }
+    showDropDown: boolean = false;
+constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Service, 
+<#list pojo.fieldsGeneric as fieldGeneric>
+ private ${fieldGeneric.name}Service:${fieldGeneric.name?cap_first}Service,
+</#list>) { }
+
+
 // methods 
-
-
-  ngOnInit(): void {
+ 
+   ngOnInit(): void {
     this.${pojo.name?uncap_first}Service.edit${pojo.name}$.subscribe(value=>{
     if(value){
+      this.showDropDown = true;
      this.edit${pojo.name}Form.setValue({
        <#list pojo.fieldsSimple as field>
          <#if field.type.simpleName == "Date">
@@ -44,10 +61,19 @@ constructor(private ${pojo.name?uncap_first}Service: ${pojo.name?cap_first}Servi
           ${field.name}: this.selected${pojo.name}.${field.name},
          </#if>
     </#list>
+    <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+          ${fieldGeneric.name?uncap_first}Vo : this.selected${pojo.name}.${fieldGeneric.name?uncap_first}Vo,
+            </#if>
+         </#if>
+     </#list>  
     });
     }
   });
   }
+
+
 
 
 
@@ -75,6 +101,13 @@ public edit(){
             </#if>
          </#if>
     </#list>
+        <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+          this.selected${pojo.name}.${fieldGeneric.name?uncap_first}Vo = this.${fieldGeneric.name?uncap_first}Vo.value,
+            </#if>
+         </#if>
+     </#list>  
     this.${pojo.name?uncap_first}Service.edit().subscribe(result=>{
         this.edit${pojo.name}Dialog = false;
     },error=>{
@@ -90,6 +123,14 @@ public edit(){
             }
          </#if>
     </#list>
+     <#list pojo.fieldsGeneric as fieldGeneric>
+       <#if (fieldGeneric.pojo.reference)??>
+           <#if fieldGeneric.pojo.name != pojo.name>
+                  get ${fieldGeneric.name?uncap_first}Vo() {
+                 return this.edit${pojo.name}Form.get('${fieldGeneric.name?uncap_first}Vo');
+            }            </#if>
+         </#if>
+     </#list> 
  
   get ${pojo.name?uncap_first}s(): Array<${pojo.name}Vo> {
     return this.${pojo.name?uncap_first}Service.${pojo.name?uncap_first}s;
@@ -111,6 +152,12 @@ public edit(){
   set edit${pojo.name}Dialog(value: boolean) {
         this.${pojo.name?uncap_first}Service.edit${pojo.name}Dialog= value;
        }
-
-
+<#list pojo.fieldsGeneric as fieldGeneric>
+  get ${fieldGeneric.name?uncap_first}s(): Array<${fieldGeneric.name?cap_first}Vo> {
+    return this.${fieldGeneric.name?uncap_first}Service.${fieldGeneric.name?uncap_first}s;
+       }
+  set ${fieldGeneric.name?uncap_first}s(value: Array<${fieldGeneric.name?cap_first}Vo>) {
+        this.${fieldGeneric.name?uncap_first}Service.${fieldGeneric.name?uncap_first}s= value;
+       } 
+</#list>
 }
